@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { logout } from "../login/actions";
+import { BottomNav } from "./_components/BottomNav";
 
 export default async function AppLayout({
   children,
@@ -33,6 +34,8 @@ export default async function AppLayout({
       </header>
 
       <main className="flex-1 px-5 py-6">{children}</main>
+
+      <BottomNav />
     </div>
   );
 }
