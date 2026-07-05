@@ -43,3 +43,10 @@ next-env.d.ts
 
 # lanzador local
 Claude - oncotrack App.bat
+
+# token CLI Supabase (local, nunca subir)
+.supabase-token
+
+# temporales locales
+.next-start.log
+.playwright-mcp/
