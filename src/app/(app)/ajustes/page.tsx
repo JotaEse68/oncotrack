@@ -70,6 +70,20 @@ export default function AjustesPage() {
           </span>
         </Link>
         <Link
+          href="/compartir"
+          className="flex min-h-11 items-center justify-between border-t border-line px-5 py-4 transition hover:bg-surface"
+        >
+          <span>
+            <span className="block text-sm text-fg">Compartir</span>
+            <span className="mt-0.5 block text-xs text-muted">
+              Enlace temporal cifrado, sin servidores
+            </span>
+          </span>
+          <span aria-hidden className="text-jade">
+            →
+          </span>
+        </Link>
+        <Link
           href="/ajustes/ia"
           className="flex min-h-11 items-center justify-between border-t border-line px-5 py-4 transition hover:bg-surface"
         >
