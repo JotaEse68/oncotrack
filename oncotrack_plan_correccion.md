@@ -52,12 +52,33 @@ Ana y Jota pueden seguir usando su instancia actual si quieren compartir datos e
 
 ---
 
-## 3. Tema visual
+## 3. Tema visual — paleta definitiva (zebra + morado páncreas)
 
-- Cambiar el valor por defecto de los tokens en `src/app/globals.css`: fondo base pasa de tinta oscura (`#0f1518`) a un crema/hueso cálido (ej. `#f7f3ee` o similar tono cálido, no blanco frío de hospital).
-- Mantener jade (`#5fb6a6`) y arcilla (`#d6a17a`) como acentos — funcionan igual de bien sobre fondo claro.
-- Añadir toggle claro/oscuro en Ajustes, guardado en `ajustes` local, aplicado vía clase en `<html>` o `data-theme`.
-- Revisar contraste de textos sobre el nuevo fondo claro (WCAG AA mínimo).
+Se sustituye por completo la paleta jade/crema anterior. La nueva identidad conecta con el símbolo internacional de enfermedades raras/TNE (rayas de cebra, blanco y negro) y con el color oficial de concienciación del cáncer de páncreas (morado/lavanda) — coherente con que la app es específicamente para TNE pancreático.
+
+**Modo claro:**
+- Fondo página: `#ffffff`
+- Fondo tarjeta: `#f7f7f8`
+- Borde: `#e4e4e7`
+- Texto principal: `#18181b`
+- Texto secundario: `#71717a`
+- Acento (morado páncreas): `#7c5cd4`
+
+**Modo oscuro** (misma escala invertida, no es una paleta nueva):
+- Fondo página: `#141416`
+- Fondo tarjeta: `#1f1f22`
+- Borde: `#2e2e33`
+- Texto principal: `#f4f4f5`
+- Texto secundario: `#a1a1aa`
+- Acento: `#a78bfa` (mismo morado, aclarado para contraste sobre fondo oscuro)
+
+**Regla de uso del acento:** el morado se usa puntual — sección activa en la nav inferior, links activos, botón principal — nunca como fondo de bloques grandes. Es un color con carga simbólica (páncreas); usarlo de más le quita fuerza y empieza a leerse como decoración sin motivo.
+
+**Textura de fondo sutil (opcional, guiño al lazo de cebra):** añadir una marca de agua muy discreta de rayas finas (inspiradas en el lazo de cebra de TNE) en zonas de fondo vacías o como separador decorativo — nunca como patrón dominante. Debe ser casi imperceptible a primera vista (opacidad muy baja, 3-5%), solo para romper la planitud del fondo sin distraer ni parecer un estampado llamativo. Si en la práctica se ve recargado o "ruidoso", quitarlo — el criterio es "se nota que hay textura si te fijas", no "se ve un estampado de cebra".
+
+- Implementar como variables CSS en `src/app/globals.css`, con `data-theme` o clase en `<html>` para alternar claro/oscuro (ya existe el mecanismo, solo cambian los valores).
+- Toggle claro/oscuro en Ajustes ya implementado — mantener, solo actualizar los valores de color que aplica.
+- Revisar contraste de textos en ambos modos (WCAG AA mínimo) tras el cambio, especialmente el morado sobre fondo claro y su versión aclarada sobre fondo oscuro.
 
 ---
 
