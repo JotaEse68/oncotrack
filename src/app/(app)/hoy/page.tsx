@@ -3,14 +3,29 @@
 import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/lib/db";
+import { diasHasta, proximaCita, textoCountdown } from "@/lib/fechas";
+import { CARD_CLS } from "../_components/ui";
 
 export default function HoyPage() {
   const perfil = useLiveQuery(() => db.perfil.get(1));
+  const citas = useLiveQuery(() => db.citas.toArray());
+  const preguntas = useLiveQuery(() => db.preguntas.toArray());
+
   const hoy = new Date().toLocaleDateString("es-ES", {
     weekday: "long",
     day: "numeric",
     month: "long",
   });
+
+  const proxima = citas ? proximaCita(citas) : undefined;
+  const diasProxima = proxima ? diasHasta(proxima.fecha) : undefined;
+  const esHoy = diasProxima === 0;
+  const pendientesDeHoy =
+    esHoy && proxima
+      ? (preguntas ?? []).filter(
+          (p) => p.citaId === proxima.id && p.resuelta === 0
+        )
+      : [];
 
   return (
     <div className="mx-auto max-w-md space-y-6">
@@ -22,6 +37,68 @@ export default function HoyPage() {
           {perfil?.nombre ? `Hola, ${perfil.nombre}` : "Tu espacio"}
         </h1>
       </header>
+
+      {/* Banner del día de la cita con las preguntas anotadas (§4.4) */}
+      {esHoy && proxima && (
+        <div className="rounded-2xl border border-jade/40 bg-jade/10 p-5">
+          <p className="text-sm font-medium text-fg">
+            Hoy tienes cita
+            {proxima.especialista && <> con {proxima.especialista}</>}
+            {proxima.hora && (
+              <span className="tabular text-muted"> · {proxima.hora}</span>
+            )}
+            {pendientesDeHoy.length > 0 && (
+              <>
+                {" "}
+                — tenías {pendientesDeHoy.length}{" "}
+                {pendientesDeHoy.length === 1
+                  ? "pregunta anotada"
+                  : "preguntas anotadas"}
+              </>
+            )}
+          </p>
+          {pendientesDeHoy.length > 0 && (
+            <details className="mt-2">
+              <summary className="cursor-pointer text-xs text-jade">
+                Ver tus preguntas
+              </summary>
+              <ul className="mt-2 space-y-2">
+                {pendientesDeHoy.map((p) => (
+                  <li key={p.id} className="flex items-start gap-2.5">
+                    <input
+                      type="checkbox"
+                      onChange={(e) =>
+                        db.preguntas.update(p.id!, {
+                          resuelta: e.target.checked ? 1 : 0,
+                        })
+                      }
+                      className="mt-0.5 h-5 w-5 accent-jade"
+                      aria-label={`Marcar resuelta: ${p.texto}`}
+                    />
+                    <span className="text-sm leading-5 text-fg">{p.texto}</span>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
+        </div>
+      )}
+
+      {/* Countdown a la próxima cita (§4.3) */}
+      {proxima && !esHoy && diasProxima !== undefined && (
+        <Link href="/citas" className={`block ${CARD_CLS} transition hover:border-jade/50`}>
+          <p className="text-xs text-muted">Próxima cita</p>
+          <p className="mt-1 text-sm text-fg">
+            <span className="font-semibold text-jade">
+              {textoCountdown(diasProxima)}
+            </span>
+            {proxima.especialista && <>: {proxima.especialista}</>}
+            {proxima.centro && (
+              <span className="text-muted"> · {proxima.centro}</span>
+            )}
+          </p>
+        </Link>
+      )}
 
       {!perfil?.nombre && (
         <Link
