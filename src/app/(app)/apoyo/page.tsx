@@ -12,6 +12,16 @@ const SECCIONES = [
     titulo: "Radar de investigación",
     detalle: "Ensayos y avances sobre tu perfil, cuando tú quieras",
   },
+  {
+    href: "/apoyo/asistente",
+    titulo: "Espacio de acompañamiento",
+    detalle: "Para pensar en voz alta — no sustituye a nadie real",
+  },
+  {
+    href: "/apoyo/sesiones",
+    titulo: "Mis sesiones",
+    detalle: "Diario de terapia o psico-oncología, aparte del chat",
+  },
 ];
 
 export default function ApoyoPage() {
