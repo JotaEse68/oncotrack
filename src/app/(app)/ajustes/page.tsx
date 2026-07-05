@@ -103,6 +103,16 @@ export default function AjustesPage() {
         Tus datos viven solo en este dispositivo. Nosotros no los vemos, no los
         guardamos, no los compartimos.
       </p>
+
+      {/* Solo existe si la instalación se compiló con el flag (§4.11) */}
+      {process.env.NEXT_PUBLIC_ENABLE_CLOUD_SYNC === "true" && (
+        <Link
+          href="/ajustes/avanzado"
+          className="block py-1 text-center text-xs text-muted underline-offset-2 hover:underline"
+        >
+          Avanzado
+        </Link>
+      )}
     </div>
   );
 }
