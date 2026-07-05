@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./_components/ThemeProvider";
 import { LockGate } from "./_components/LockGate";
+import { RegistroSW } from "./_components/RegistroSW";
 import { SCRIPT_ANTIFLASH } from "@/lib/tema";
 
 const geistSans = Geist({
@@ -40,6 +41,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col">
         <script dangerouslySetInnerHTML={{ __html: SCRIPT_ANTIFLASH }} />
         <ThemeProvider />
+        <RegistroSW />
         <LockGate>{children}</LockGate>
       </body>
     </html>

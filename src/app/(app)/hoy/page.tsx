@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { diasHasta, proximaCita, textoCountdown } from "@/lib/fechas";
 import { necesitaRecordatorio } from "@/lib/backup";
 import { CARD_CLS } from "../_components/ui";
+import { PromptInstalar } from "../_components/PromptInstalar";
 
 export default function HoyPage() {
   const perfil = useLiveQuery(() => db.perfil.get(1));
@@ -133,6 +134,8 @@ export default function HoyPage() {
           </span>
         </Link>
       )}
+
+      <PromptInstalar />
     </div>
   );
 }
