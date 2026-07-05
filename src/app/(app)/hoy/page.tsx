@@ -4,12 +4,14 @@ import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/lib/db";
 import { diasHasta, proximaCita, textoCountdown } from "@/lib/fechas";
+import { necesitaRecordatorio } from "@/lib/backup";
 import { CARD_CLS } from "../_components/ui";
 
 export default function HoyPage() {
   const perfil = useLiveQuery(() => db.perfil.get(1));
   const citas = useLiveQuery(() => db.citas.toArray());
   const preguntas = useLiveQuery(() => db.preguntas.toArray());
+  const ajustes = useLiveQuery(() => db.ajustes.get(1));
 
   const hoy = new Date().toLocaleDateString("es-ES", {
     weekday: "long",
@@ -96,6 +98,21 @@ export default function HoyPage() {
             {proxima.centro && (
               <span className="text-muted"> · {proxima.centro}</span>
             )}
+          </p>
+        </Link>
+      )}
+
+      {/* Recordatorio suave de backup (§4.6) */}
+      {ajustes && necesitaRecordatorio(ajustes) && (
+        <Link
+          href="/ajustes"
+          className="block rounded-2xl border border-clay/40 bg-clay/10 p-5 transition hover:border-clay/60"
+        >
+          <p className="text-xs text-muted">Cuando tengas un momento</p>
+          <p className="mt-1 text-sm leading-6 text-fg">
+            {ajustes.ultimoBackup
+              ? "Hace más de 30 días de tu última copia — guarda una nueva cuando tengas un momento."
+              : "Ya tienes datos guardados aquí — guarda una copia por si cambias de móvil."}
           </p>
         </Link>
       )}
