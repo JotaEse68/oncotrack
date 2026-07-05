@@ -69,6 +69,20 @@ export default function AjustesPage() {
             →
           </span>
         </Link>
+        <Link
+          href="/ajustes/ia"
+          className="flex min-h-11 items-center justify-between border-t border-line px-5 py-4 transition hover:bg-surface"
+        >
+          <span>
+            <span className="block text-sm text-fg">Tu propia IA</span>
+            <span className="mt-0.5 block text-xs text-muted">
+              Para leer analíticas con la cámara (opcional)
+            </span>
+          </span>
+          <span aria-hidden className="text-jade">
+            →
+          </span>
+        </Link>
       </section>
 
       <p className="px-1 text-xs leading-5 text-muted">
