@@ -7,6 +7,11 @@ const SECCIONES = [
     titulo: "Guía y glosario",
     detalle: "Qué significan los marcadores, en palabras normales",
   },
+  {
+    href: "/apoyo/radar",
+    titulo: "Radar de investigación",
+    detalle: "Ensayos y avances sobre tu perfil, cuando tú quieras",
+  },
 ];
 
 export default function ApoyoPage() {
