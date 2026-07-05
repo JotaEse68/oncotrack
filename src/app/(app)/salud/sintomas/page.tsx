@@ -10,6 +10,7 @@ import {
   hoyISO,
   fechaLegible,
 } from "../../_components/ui";
+import { EmptyState } from "../../_components/EmptyState";
 
 const SINTOMAS_HABITUALES = [
   "Diarrea",
@@ -132,9 +133,7 @@ export default function SintomasPage() {
         </ul>
       )}
       {sintomas && sintomas.length === 0 && (
-        <p className="px-1 text-sm text-muted">
-          Cuando registres cómo te encuentras, aquí verás tu evolución.
-        </p>
+        <EmptyState mensaje="Cuando registres cómo te encuentras, aquí verás tu evolución." />
       )}
     </div>
   );

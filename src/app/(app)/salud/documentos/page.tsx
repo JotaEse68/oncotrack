@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db, contarRegistroNuevo, type Documento } from "@/lib/db";
-import { CARD_CLS, hoyISO, fechaLegible } from "../../_components/ui";
+import { hoyISO, fechaLegible } from "../../_components/ui";
+import { EmptyState } from "../../_components/EmptyState";
 
 function Miniatura({ doc, onOpen }: { doc: Documento; onOpen: () => void }) {
   const [url, setUrl] = useState<string>();
@@ -139,9 +140,7 @@ export default function DocumentosPage() {
         </div>
       )}
       {documentos && documentos.length === 0 && (
-        <p className={`${CARD_CLS} text-sm text-muted`}>
-          Tus informes y analíticas vivirán aquí, solo en tu móvil.
-        </p>
+        <EmptyState mensaje="Tus informes y analíticas vivirán aquí, solo en tu móvil." />
       )}
 
       {abierto && <Visor doc={abierto} onClose={() => setAbierto(null)} />}

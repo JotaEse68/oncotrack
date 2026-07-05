@@ -11,6 +11,7 @@ import {
   hoyISO,
   fechaLegible,
 } from "../../_components/ui";
+import { EmptyState } from "../../_components/EmptyState";
 
 export default function MedicacionPage() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -130,10 +131,7 @@ export default function MedicacionPage() {
         </ul>
       )}
       {medicaciones && medicaciones.length === 0 && (
-        <p className="px-1 text-sm text-muted">
-          Apunta aquí tu medicación para no tener que recordarlo todo de
-          memoria.
-        </p>
+        <EmptyState mensaje="Apunta aquí tu medicación para no tener que recordarlo todo de memoria." />
       )}
     </div>
   );

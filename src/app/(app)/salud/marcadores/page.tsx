@@ -10,6 +10,7 @@ import {
   hoyISO,
   fechaLegible,
 } from "../../_components/ui";
+import { EmptyState } from "../../_components/EmptyState";
 
 const MARCADORES_HABITUALES = [
   "Cromogranina A",
@@ -148,10 +149,7 @@ export default function MarcadoresPage() {
         </ul>
       )}
       {marcadores && marcadores.length === 0 && (
-        <p className="px-1 text-sm text-muted">
-          Aún no hay nada aquí — cuando subas tu primera analítica, esto se irá
-          llenando.
-        </p>
+        <EmptyState mensaje="Aún no hay nada aquí — cuando subas tu primera analítica, esto se irá llenando." />
       )}
     </div>
   );

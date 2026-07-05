@@ -1,22 +1,35 @@
 @import "tailwindcss";
 
 @theme {
-  /* Tinta profunda con calidez — nada de negro clínico frío */
+  /* Tema claro cálido por defecto (§3) — crema/hueso, nada de blanco frío
+     de hospital. Los NOMBRES de token se mantienen: ink = fondo base. */
+  --color-ink: #f7f3ee;
+  --color-surface: #fffdf9;
+  --color-surface2: #f0e9df;
+  --color-line: #e2d8c9;
+  --color-fg: #253238;
+  --color-muted: #5f7370;
+  /* Acentos jade/arcilla oscurecidos para contraste AA sobre fondo claro */
+  --color-jade: #2e7a6c;
+  --color-jade-dim: #5fb6a6;
+  --color-clay: #a96e42;
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Tema oscuro opcional (Ajustes → Apariencia) — la paleta original */
+html[data-theme="oscuro"] {
   --color-ink: #0f1518;
   --color-surface: #172127;
   --color-surface2: #1e2a31;
   --color-line: #26363d;
   --color-fg: #e7edeb;
   --color-muted: #8ca09b;
-  /* Acento sereno (no alarma, no semáforo clínico) */
   --color-jade: #5fb6a6;
   --color-jade-dim: #3e7e73;
-  /* Secundario cálido, humano */
   --color-clay: #d6a17a;
-
-  --font-display: var(--font-fraunces);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 html {
