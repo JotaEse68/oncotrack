@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { GLOSARIO } from "@/lib/contenido/glosario";
 import { BloqueAyudaReal } from "../_components/BloqueAyudaReal";
 
@@ -60,6 +61,13 @@ export default function AyudaPage() {
       </section>
 
       <BloqueAyudaReal />
+
+      <Link
+        href="/onboarding?repaso=1"
+        className="block py-1 text-center text-xs text-muted underline-offset-2 hover:underline"
+      >
+        Ver la bienvenida de nuevo
+      </Link>
     </div>
   );
 }

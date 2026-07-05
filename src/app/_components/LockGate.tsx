@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useLiveQuery } from "dexie-react-hooks";
 import { getAjustes, saveAjustes } from "@/lib/db";
 import { verifyPin } from "@/lib/pin";
 import { PinPad } from "./PinPad";
@@ -9,35 +10,49 @@ import { PinPad } from "./PinPad";
 const CLAVE_SESION = "oncotrack-abierto";
 
 // /compartido es para terceros: no muestra la base local, solo lo que
-// trae la URL, así que no pasa por el candado.
-const RUTAS_SIN_CANDADO = ["/compartido"];
+// trae la URL, así que no pasa por el candado ni por el onboarding.
+const RUTAS_LIBRES = ["/compartido"];
 
 export function LockGate({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [estado, setEstado] = useState<"cargando" | "bloqueado" | "abierto">(
-    "cargando"
-  );
+  const router = useRouter();
+  // null = cargando (evita decidir antes de leer Dexie)
+  const ajustes = useLiveQuery(() => getAjustes(), [], null);
+  const [desbloqueado, setDesbloqueado] = useState(false);
   const [confirmarReset, setConfirmarReset] = useState(false);
   // Hallazgo del security-review: retardo progresivo contra prueba manual
   // de PINs (hasta 5s por intento tras varios fallos).
   const [fallos, setFallos] = useState(0);
 
   useEffect(() => {
-    getAjustes().then((a) => {
-      const yaAbierto = sessionStorage.getItem(CLAVE_SESION) === "1";
-      setEstado(a.pinHash && !yaAbierto ? "bloqueado" : "abierto");
-    });
+    setDesbloqueado(sessionStorage.getItem(CLAVE_SESION) === "1");
   }, []);
 
-  if (RUTAS_SIN_CANDADO.some((r) => pathname.startsWith(r))) {
-    return <>{children}</>;
-  }
+  const esLibre = RUTAS_LIBRES.some((r) => pathname.startsWith(r));
+  const esOnboarding = pathname.startsWith("/onboarding");
+  const bloqueado =
+    !esLibre && ajustes !== null && Boolean(ajustes.pinHash) && !desbloqueado;
 
-  if (estado === "cargando") {
+  // Primer uso: a la bienvenida (§4.12) — informa, nunca bloquea (se puede saltar).
+  const onboardingPendiente =
+    !esLibre &&
+    !esOnboarding &&
+    ajustes !== null &&
+    ajustes.onboardingVisto === 0;
+
+  useEffect(() => {
+    if (!bloqueado && onboardingPendiente) {
+      router.replace("/onboarding");
+    }
+  }, [bloqueado, onboardingPendiente, router]);
+
+  if (esLibre) return <>{children}</>;
+
+  if (ajustes === null || onboardingPendiente) {
     return <div className="min-h-dvh bg-ink" aria-busy="true" />;
   }
 
-  if (estado === "bloqueado") {
+  if (bloqueado) {
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-8 bg-ink px-6 py-10">
         <PinPad
@@ -54,7 +69,7 @@ export function LockGate({ children }: { children: ReactNode }) {
             const ok = await verifyPin(pin, a.pinSalt, a.pinHash);
             if (ok) {
               sessionStorage.setItem(CLAVE_SESION, "1");
-              setEstado("abierto");
+              setDesbloqueado(true);
             } else {
               setFallos((f) => f + 1);
             }
@@ -79,7 +94,7 @@ export function LockGate({ children }: { children: ReactNode }) {
                 onClick={async () => {
                   await saveAjustes({ pinHash: undefined, pinSalt: undefined });
                   sessionStorage.setItem(CLAVE_SESION, "1");
-                  setEstado("abierto");
+                  setDesbloqueado(true);
                 }}
                 className="min-h-11 rounded-lg bg-jade px-3 py-2 text-sm font-semibold text-ink"
               >
