@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const items = [
   { href: "/hoy", label: "Hoy" },
+  { href: "/salud", label: "Salud" },
   { href: "/perfil", label: "Perfil" },
 ];
 
@@ -12,9 +13,12 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky bottom-0 z-10 grid grid-cols-2 border-t border-line bg-ink/90 backdrop-blur">
+    <nav
+      className="sticky bottom-0 z-10 grid border-t border-line bg-ink/90 backdrop-blur"
+      style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}
+    >
       {items.map((it) => {
-        const active = pathname === it.href;
+        const active = pathname === it.href || pathname.startsWith(it.href + "/");
         return (
           <Link
             key={it.href}
