@@ -50,3 +50,4 @@ Claude - oncotrack App.bat
 # temporales locales
 .next-start.log
 .playwright-mcp/
+.vercel-token
