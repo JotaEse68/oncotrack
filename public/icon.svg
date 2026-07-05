@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#5fb6a6"/>
+  <!-- Espina vertical: la línea de tiempo, firma visual de OncoTrack -->
+  <line x1="256" y1="96" x2="256" y2="416" stroke="#f7f3ee" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="256" cy="160" r="22" fill="#f7f3ee"/>
+  <circle cx="256" cy="256" r="30" fill="#f7f3ee"/>
+  <circle cx="256" cy="352" r="22" fill="#f7f3ee"/>
+</svg>

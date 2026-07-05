@@ -1,15 +1,11 @@
+"use client";
+
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "@/lib/db";
 
-export default async function HoyPage() {
-  const supabase = await createClient();
-
-  const { data: profiles } = await supabase
-    .from("patient_profiles")
-    .select("full_name")
-    .limit(1);
-  const patient = profiles?.[0]?.full_name;
-
+export default function HoyPage() {
+  const perfil = useLiveQuery(() => db.perfil.get(1));
   const hoy = new Date().toLocaleDateString("es-ES", {
     weekday: "long",
     day: "numeric",
@@ -23,32 +19,26 @@ export default async function HoyPage() {
           Hoy · <span className="text-muted">{hoy}</span>
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
-          {patient ? `Expediente de ${patient}` : "Expediente"}
+          {perfil?.nombre ? `Hola, ${perfil.nombre}` : "Tu espacio"}
         </h1>
       </header>
 
-      <div className="rounded-2xl border border-line bg-surface/60 p-5">
-        <p className="text-sm leading-6 text-muted">
-          El expediente está listo. Los siguientes pasos de la Fase 1 irán
-          sumando diagnóstico, tratamientos, medicación, citas y la línea de
-          tiempo.
-        </p>
-      </div>
-
-      <Link
-        href="/perfil"
-        className="flex items-center justify-between rounded-2xl border border-line bg-surface/40 p-5 transition hover:border-jade/50"
-      >
-        <span>
-          <span className="block text-xs text-muted">Siguiente</span>
-          <span className="mt-0.5 block text-sm text-fg">
-            Completar el perfil clínico
+      {!perfil?.nombre && (
+        <Link
+          href="/perfil"
+          className="flex items-center justify-between rounded-2xl border border-line bg-surface/40 p-5 transition hover:border-jade/50"
+        >
+          <span>
+            <span className="block text-xs text-muted">Para empezar</span>
+            <span className="mt-0.5 block text-sm text-fg">
+              Cuéntanos tu nombre
+            </span>
           </span>
-        </span>
-        <span aria-hidden className="text-jade">
-          →
-        </span>
-      </Link>
+          <span aria-hidden className="text-jade">
+            →
+          </span>
+        </Link>
+      )}
     </div>
   );
 }
