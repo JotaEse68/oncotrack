@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db, contarRegistroNuevo, type Cita, type Pregunta } from "@/lib/db";
 import { diasHasta, textoCountdown } from "@/lib/fechas";
@@ -143,6 +144,10 @@ export default function CitasPage() {
           Tus citas y tus dudas
         </h1>
       </header>
+
+      <Link href="/consulta" className={`block text-center ${BTN_PRIMARIO}`}>
+        Estoy en la consulta
+      </Link>
 
       <form
         ref={formRef}

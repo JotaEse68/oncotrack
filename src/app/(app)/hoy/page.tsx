@@ -112,6 +112,12 @@ export default function HoyPage() {
               </>
             )}
           </p>
+          <Link
+            href="/consulta"
+            className="mt-3 flex min-h-11 w-full items-center justify-center rounded-lg bg-morado px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-morado/90"
+          >
+            Estoy en la consulta
+          </Link>
           {pendientesDeHoy.length > 0 && (
             <details className="mt-2">
               <summary className="cursor-pointer text-xs text-morado">
