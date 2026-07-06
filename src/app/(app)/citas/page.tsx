@@ -13,6 +13,7 @@ import {
   fechaLegible,
 } from "../_components/ui";
 import { EmptyState } from "../_components/EmptyState";
+import { useGuardado } from "../_components/useGuardado";
 
 function ListaPreguntas({ preguntas }: { preguntas: Pregunta[] }) {
   if (preguntas.length === 0) return null;
@@ -114,6 +115,7 @@ function TarjetaCita({
 
 export default function CitasPage() {
   const formRef = useRef<HTMLFormElement>(null);
+  const [guardado, confirmarGuardado] = useGuardado();
   const [verPasadas, setVerPasadas] = useState(false);
   const citas = useLiveQuery(() => db.citas.orderBy("fecha").toArray());
   const preguntas = useLiveQuery(() => db.preguntas.toArray());
@@ -128,6 +130,7 @@ export default function CitasPage() {
     });
     await contarRegistroNuevo();
     formRef.current?.reset();
+    confirmarGuardado();
   }
 
   const futuras = citas?.filter((c) => diasHasta(c.fecha) >= 0) ?? [];
@@ -196,8 +199,8 @@ export default function CitasPage() {
           </span>
           <textarea name="notas" rows={2} className={INPUT_CLS} />
         </label>
-        <button type="submit" className={BTN_PRIMARIO}>
-          Guardar cita
+        <button type="submit" className={BTN_PRIMARIO} aria-live="polite">
+          {guardado ? "Guardado ✓" : "Guardar cita"}
         </button>
       </form>
 

@@ -12,6 +12,7 @@ import {
   fechaLegible,
 } from "../../_components/ui";
 import { EmptyState } from "../../_components/EmptyState";
+import { useGuardado } from "../../_components/useGuardado";
 
 const SINTOMAS_HABITUALES = [
   "Diarrea",
@@ -24,6 +25,7 @@ export default function SintomasPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [escala, setEscala] = useState(5);
   const [tipo, setTipo] = useState("");
+  const [guardado, confirmarGuardado] = useGuardado();
   const sintomas = useLiveQuery(() =>
     db.sintomas.orderBy("fecha").reverse().toArray()
   );
@@ -39,6 +41,7 @@ export default function SintomasPage() {
     formRef.current?.reset();
     setEscala(5);
     setTipo("");
+    confirmarGuardado();
   }
 
   return (
@@ -127,8 +130,8 @@ export default function SintomasPage() {
             </label>
           </div>
         </details>
-        <button type="submit" className={BTN_PRIMARIO}>
-          Registrar
+        <button type="submit" className={BTN_PRIMARIO} aria-live="polite">
+          {guardado ? "Guardado ✓" : "Registrar"}
         </button>
       </form>
 

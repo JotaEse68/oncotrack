@@ -20,6 +20,7 @@ import {
 } from "../../_components/ui";
 import { EmptyState } from "../../_components/EmptyState";
 import { CapturaAnalitica } from "../../_components/CapturaAnalitica";
+import { useGuardado } from "../../_components/useGuardado";
 
 const MARCADORES_HABITUALES = [
   "Cromogranina A",
@@ -98,6 +99,7 @@ export default function MarcadoresPage() {
   const [nombre, setNombre] = useState("");
   const [unidad, setUnidad] = useState("");
   const [unidadRecordada, setUnidadRecordada] = useState(false);
+  const [guardado, confirmarGuardado] = useGuardado();
   const marcadores = useLiveQuery(() =>
     db.marcadores.orderBy("fecha").reverse().toArray()
   );
@@ -128,6 +130,7 @@ export default function MarcadoresPage() {
     setNombre("");
     setUnidad("");
     setUnidadRecordada(false);
+    confirmarGuardado();
   }
 
   async function borrar(m: Marcador) {
@@ -270,8 +273,8 @@ export default function MarcadoresPage() {
             </label>
           </>
         )}
-        <button type="submit" className={BTN_PRIMARIO}>
-          Añadir valor
+        <button type="submit" className={BTN_PRIMARIO} aria-live="polite">
+          {guardado ? "Guardado ✓" : "Añadir valor"}
         </button>
       </form>
 

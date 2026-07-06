@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db, contarRegistroNuevo } from "@/lib/db";
 import {
@@ -12,9 +12,20 @@ import {
   fechaLegible,
 } from "../../_components/ui";
 import { EmptyState } from "../../_components/EmptyState";
+import { useGuardado } from "../../_components/useGuardado";
 
 export default function MedicacionPage() {
   const formRef = useRef<HTMLFormElement>(null);
+  const [guardado, confirmarGuardado] = useGuardado();
+  // Feedback por tarjeta: id de la medicación cuya toma se acaba de apuntar
+  const [tomaConfirmada, setTomaConfirmada] = useState<number | null>(null);
+  const timerToma = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (timerToma.current) clearTimeout(timerToma.current);
+    },
+    []
+  );
   const medicaciones = useLiveQuery(() => db.medicacion.toArray());
 
   async function agregar(formData: FormData) {
@@ -27,6 +38,7 @@ export default function MedicacionPage() {
     });
     await contarRegistroNuevo();
     formRef.current?.reset();
+    confirmarGuardado();
   }
 
   async function registrarToma(id: number) {
@@ -38,6 +50,9 @@ export default function MedicacionPage() {
       historial: [...med.historial, { fecha }],
     });
     await contarRegistroNuevo();
+    setTomaConfirmada(id);
+    if (timerToma.current) clearTimeout(timerToma.current);
+    timerToma.current = setTimeout(() => setTomaConfirmada(null), 2000);
   }
 
   return (
@@ -95,8 +110,8 @@ export default function MedicacionPage() {
             </div>
           </div>
         </details>
-        <button type="submit" className={BTN_PRIMARIO}>
-          Añadir medicación
+        <button type="submit" className={BTN_PRIMARIO} aria-live="polite">
+          {guardado ? "Guardado ✓" : "Añadir medicación"}
         </button>
       </form>
 
@@ -126,9 +141,14 @@ export default function MedicacionPage() {
               </div>
               <button
                 onClick={() => registrarToma(m.id!)}
-                className={`${BTN_SECUNDARIO} mt-3 w-full`}
+                className={`${BTN_SECUNDARIO} mt-3 w-full ${
+                  tomaConfirmada === m.id ? "border-morado text-morado" : ""
+                }`}
+                aria-live="polite"
               >
-                Registrar toma de hoy
+                {tomaConfirmada === m.id
+                  ? "Toma registrada ✓"
+                  : "Registrar toma de hoy"}
               </button>
               {m.historial.length > 0 && (
                 <p className="mt-2 text-xs text-muted">
