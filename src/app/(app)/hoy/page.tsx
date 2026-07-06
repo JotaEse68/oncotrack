@@ -12,6 +12,7 @@ import { CARD_CLS } from "../_components/ui";
 import { PromptInstalar } from "../_components/PromptInstalar";
 import { CapturaAnalitica } from "../_components/CapturaAnalitica";
 import { GuiaInicio } from "./GuiaInicio";
+import { EstadoHoy } from "./EstadoHoy";
 
 export default function HoyPage() {
   const perfil = useLiveQuery(() => db.perfil.get(1));
@@ -78,6 +79,8 @@ export default function HoyPage() {
           {perfil?.nombre ? `Hola, ${perfil.nombre}` : "Tu espacio"}
         </h1>
       </header>
+
+      <EstadoHoy />
 
       <GuiaInicio />
 
