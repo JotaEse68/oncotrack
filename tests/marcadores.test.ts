@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { agruparPorNombre, comparacionTexto } from "@/lib/marcadores";
+import {
+  agruparPorNombre,
+  comparacionTexto,
+  ultimaUnidadDe,
+} from "@/lib/marcadores";
 import type { Marcador } from "@/lib/db";
 
 // Datos reales del caso de prueba del usuario
@@ -75,6 +79,16 @@ describe("comparacionTexto — §4.9, lenguaje llano sin juicios", () => {
     for (const prohibida of ["normal", "anormal", "alto", "bajo", "peligro"]) {
       expect(texto.toLowerCase()).not.toContain(prohibida);
     }
+  });
+});
+
+describe("ultimaUnidadDe — memoria de unidad (spec §3)", () => {
+  it("recuerda la unidad del registro más reciente, sin importar mayúsculas", () => {
+    expect(ultimaUnidadDe("cromogranina a", [CGA_FEB, CGA_MAR])).toBe("ng/mL");
+  });
+
+  it("sin coincidencia devuelve undefined", () => {
+    expect(ultimaUnidadDe("Ki-67", [CGA_FEB, NSE])).toBeUndefined();
   });
 });
 

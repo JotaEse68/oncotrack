@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db, contarRegistroNuevo, type Marcador } from "@/lib/db";
 import { colapsarDuplicado } from "@/lib/texto";
 import {
   agruparPorNombre,
   comparacionTexto,
+  ultimaUnidadDe,
   type GrupoMarcador,
 } from "@/lib/marcadores";
 import { GraficaMarcador } from "./GraficaMarcador";
@@ -93,10 +94,25 @@ function TarjetaMarcador({
 
 export default function MarcadoresPage() {
   const formRef = useRef<HTMLFormElement>(null);
+  const valorRef = useRef<HTMLInputElement>(null);
   const [nombre, setNombre] = useState("");
+  const [unidad, setUnidad] = useState("");
+  const [unidadRecordada, setUnidadRecordada] = useState(false);
   const marcadores = useLiveQuery(() =>
     db.marcadores.orderBy("fecha").reverse().toArray()
   );
+
+  // Memoria de unidad (spec §3): al reconocer el marcador, la unidad
+  // de la última vez se rellena sola y el foco va directo al valor.
+  useEffect(() => {
+    const recordada = ultimaUnidadDe(nombre, marcadores ?? []);
+    if (recordada) {
+      setUnidad(recordada);
+      setUnidadRecordada(true);
+    } else {
+      setUnidadRecordada(false);
+    }
+  }, [nombre, marcadores]);
 
   async function agregar(formData: FormData) {
     // colapsarDuplicado: blindaje contra el bug de autocompletado móvil
@@ -105,11 +121,13 @@ export default function MarcadoresPage() {
       nombre: colapsarDuplicado(nombre),
       fecha: String(formData.get("fecha") ?? hoyISO()),
       valor: Number(formData.get("valor")),
-      unidad: String(formData.get("unidad") ?? "").trim(),
+      unidad: unidad.trim(),
     });
     await contarRegistroNuevo();
     formRef.current?.reset();
     setNombre("");
+    setUnidad("");
+    setUnidadRecordada(false);
   }
 
   async function borrar(m: Marcador) {
@@ -152,7 +170,10 @@ export default function MarcadoresPage() {
               <button
                 key={n}
                 type="button"
-                onClick={() => setNombre(n)}
+                onClick={() => {
+                  setNombre(n);
+                  valorRef.current?.focus();
+                }}
                 className={`min-h-9 rounded-full border px-3 py-1.5 text-xs transition ${
                   nombre === n
                     ? "border-morado bg-morado/10 text-morado"
@@ -164,44 +185,91 @@ export default function MarcadoresPage() {
             ))}
           </div>
         </label>
-        <div className="grid grid-cols-2 gap-3">
-          <label className="block">
-            <span className="mb-1.5 block text-xs font-medium text-muted">
-              Valor
-            </span>
+        {/* El input de Valor mantiene su identidad entre renders para no
+            perder el foco cuando la unidad recordada reordena el formulario */}
+        <label className="block">
+          <span className="mb-1.5 block text-xs font-medium text-muted">
+            Valor
+          </span>
+          <div className="flex items-center gap-2">
             <input
+              ref={valorRef}
               name="valor"
               type="number"
               step="any"
               inputMode="decimal"
               required
-              className={INPUT_CLS}
+              className={`${INPUT_CLS}${unidadRecordada ? " text-lg" : ""}`}
             />
-          </label>
-          <label className="block">
-            <span className="mb-1.5 block text-xs font-medium text-muted">
-              Unidad
-            </span>
-            <input
-              name="unidad"
-              required
-              placeholder="ng/mL"
-              className={INPUT_CLS}
-            />
-          </label>
-        </div>
-        <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-muted">
-            Fecha de la analítica
-          </span>
-          <input
-            name="fecha"
-            type="date"
-            defaultValue={hoyISO()}
-            required
-            className={INPUT_CLS}
-          />
+            {unidadRecordada && (
+              <span className="whitespace-nowrap rounded-full border border-morado bg-morado/10 px-3 py-1.5 text-xs text-morado">
+                {unidad} ✓
+              </span>
+            )}
+          </div>
         </label>
+        {unidadRecordada ? (
+          <details>
+            <summary className="cursor-pointer py-1 text-xs text-muted">
+              ▸ cambiar fecha o unidad
+            </summary>
+            <div className="mt-2 grid grid-cols-2 gap-3">
+              <label className="block">
+                <span className="mb-1.5 block text-xs font-medium text-muted">
+                  Unidad
+                </span>
+                <input
+                  value={unidad}
+                  onChange={(e) => setUnidad(e.target.value)}
+                  required
+                  placeholder="ng/mL"
+                  aria-label="Unidad"
+                  className={INPUT_CLS}
+                />
+              </label>
+              <label className="block">
+                <span className="mb-1.5 block text-xs font-medium text-muted">
+                  Fecha de la analítica
+                </span>
+                <input
+                  name="fecha"
+                  type="date"
+                  defaultValue={hoyISO()}
+                  required
+                  className={INPUT_CLS}
+                />
+              </label>
+            </div>
+          </details>
+        ) : (
+          <>
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-medium text-muted">
+                Unidad
+              </span>
+              <input
+                value={unidad}
+                onChange={(e) => setUnidad(e.target.value)}
+                required
+                placeholder="ng/mL"
+                aria-label="Unidad"
+                className={INPUT_CLS}
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-medium text-muted">
+                Fecha de la analítica
+              </span>
+              <input
+                name="fecha"
+                type="date"
+                defaultValue={hoyISO()}
+                required
+                className={INPUT_CLS}
+              />
+            </label>
+          </>
+        )}
         <button type="submit" className={BTN_PRIMARIO}>
           Añadir valor
         </button>

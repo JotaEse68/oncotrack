@@ -101,24 +101,32 @@ export default function SintomasPage() {
             className="h-11 w-full accent-morado"
           />
         </label>
-        <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-muted">
-            Fecha
-          </span>
-          <input
-            name="fecha"
-            type="date"
-            defaultValue={hoyISO()}
-            required
-            className={INPUT_CLS}
-          />
-        </label>
-        <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-muted">
-            Nota (opcional)
-          </span>
-          <textarea name="nota" rows={2} className={INPUT_CLS} />
-        </label>
+        {/* Opcionales plegados (spec §3): hoy es el caso normal */}
+        <details>
+          <summary className="cursor-pointer py-1 text-xs text-muted">
+            ▸ fecha o nota
+          </summary>
+          <div className="mt-2 space-y-4">
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-medium text-muted">
+                Fecha
+              </span>
+              <input
+                name="fecha"
+                type="date"
+                defaultValue={hoyISO()}
+                required
+                className={INPUT_CLS}
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-medium text-muted">
+                Nota (opcional)
+              </span>
+              <textarea name="nota" rows={2} className={INPUT_CLS} />
+            </label>
+          </div>
+        </details>
         <button type="submit" className={BTN_PRIMARIO}>
           Registrar
         </button>

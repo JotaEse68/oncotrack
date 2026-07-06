@@ -49,6 +49,23 @@ export function agruparPorNombre(marcadores: Marcador[]): GrupoMarcador[] {
 }
 
 /**
+ * La unidad del registro más reciente de ese marcador (spec §3, memoria
+ * de formularios). Case-insensitive; sin coincidencia → undefined.
+ */
+export function ultimaUnidadDe(
+  nombre: string,
+  marcadores: Marcador[]
+): string | undefined {
+  const buscado = nombre.trim().toLowerCase();
+  let reciente: Marcador | undefined;
+  for (const m of marcadores) {
+    if (m.nombre.trim().toLowerCase() !== buscado) continue;
+    if (!reciente || m.fecha > reciente.fecha) reciente = m;
+  }
+  return reciente?.unidad;
+}
+
+/**
  * Texto de comparación del último valor con el inmediatamente anterior.
  * Lenguaje llano, sin juicios: "un 13% más que la última vez".
  */

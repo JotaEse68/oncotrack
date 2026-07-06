@@ -63,26 +63,38 @@ export default function MedicacionPage() {
             className={INPUT_CLS}
           />
         </label>
-        <label className="block">
-          <span className="mb-1.5 block text-xs font-medium text-muted">
-            Dosis (opcional)
-          </span>
-          <input name="dosis" placeholder="Ej.: 120 mg" className={INPUT_CLS} />
-        </label>
-        <div className="grid grid-cols-2 gap-3">
-          <label className="block">
-            <span className="mb-1.5 block text-xs font-medium text-muted">
-              Última toma
-            </span>
-            <input name="ultimaToma" type="date" className={INPUT_CLS} />
-          </label>
-          <label className="block">
-            <span className="mb-1.5 block text-xs font-medium text-muted">
-              Próxima (estimada)
-            </span>
-            <input name="proximaFecha" type="date" className={INPUT_CLS} />
-          </label>
-        </div>
+        {/* Opcionales plegados (spec §3): el nombre basta para empezar */}
+        <details>
+          <summary className="cursor-pointer py-1 text-xs text-muted">
+            ▸ detalles (dosis y fechas)
+          </summary>
+          <div className="mt-2 space-y-4">
+            <label className="block">
+              <span className="mb-1.5 block text-xs font-medium text-muted">
+                Dosis (opcional)
+              </span>
+              <input
+                name="dosis"
+                placeholder="Ej.: 120 mg"
+                className={INPUT_CLS}
+              />
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <label className="block">
+                <span className="mb-1.5 block text-xs font-medium text-muted">
+                  Última toma
+                </span>
+                <input name="ultimaToma" type="date" className={INPUT_CLS} />
+              </label>
+              <label className="block">
+                <span className="mb-1.5 block text-xs font-medium text-muted">
+                  Próxima (estimada)
+                </span>
+                <input name="proximaFecha" type="date" className={INPUT_CLS} />
+              </label>
+            </div>
+          </div>
+        </details>
         <button type="submit" className={BTN_PRIMARIO}>
           Añadir medicación
         </button>
