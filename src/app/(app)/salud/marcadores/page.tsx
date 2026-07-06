@@ -18,7 +18,7 @@ import {
   fechaLegible,
 } from "../../_components/ui";
 import { EmptyState } from "../../_components/EmptyState";
-import { OcrAnalitica } from "./OcrAnalitica";
+import { CapturaAnalitica } from "../../_components/CapturaAnalitica";
 
 const MARCADORES_HABITUALES = [
   "Cromogranina A",
@@ -129,7 +129,7 @@ export default function MarcadoresPage() {
         </h1>
       </header>
 
-      <OcrAnalitica />
+      <CapturaAnalitica origen="marcadores" />
 
       <form ref={formRef} action={agregar} className={`${CARD_CLS} space-y-4`}>
         <label className="block">

@@ -10,6 +10,7 @@ import { fraseDelDia } from "@/lib/contenido/frases";
 import { necesitaRecordatorio } from "@/lib/backup";
 import { CARD_CLS } from "../_components/ui";
 import { PromptInstalar } from "../_components/PromptInstalar";
+import { CapturaAnalitica } from "../_components/CapturaAnalitica";
 import { GuiaInicio } from "./GuiaInicio";
 
 export default function HoyPage() {
@@ -79,6 +80,18 @@ export default function HoyPage() {
       </header>
 
       <GuiaInicio />
+
+      {/* Añadir ahora: foto, archivo o contarlo (spec §2) */}
+      <section className="space-y-2">
+        <p className="px-1 text-xs text-muted">Añadir ahora</p>
+        <CapturaAnalitica origen="hoy" />
+        <Link
+          href="/capturar"
+          className="flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl border border-line px-4 py-4 text-base font-semibold text-fg transition hover:border-morado/50"
+        >
+          🎤 Contar cómo fue el día
+        </Link>
+      </section>
 
       {/* Banner del día de la cita con las preguntas anotadas (§4.4) */}
       {esHoy && proxima && (
