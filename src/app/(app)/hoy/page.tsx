@@ -13,6 +13,7 @@ import { PromptInstalar } from "../_components/PromptInstalar";
 import { CapturaAnalitica } from "../_components/CapturaAnalitica";
 import { GuiaInicio } from "./GuiaInicio";
 import { EstadoHoy } from "./EstadoHoy";
+import { AvisoToma } from "./AvisoToma";
 
 export default function HoyPage() {
   const perfil = useLiveQuery(() => db.perfil.get(1));
@@ -83,18 +84,6 @@ export default function HoyPage() {
       <EstadoHoy />
 
       <GuiaInicio />
-
-      {/* Añadir ahora: foto, archivo o contarlo (spec §2) */}
-      <section className="space-y-2">
-        <p className="px-1 text-xs text-muted">Añadir ahora</p>
-        <CapturaAnalitica origen="hoy" />
-        <Link
-          href="/capturar"
-          className="flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl border border-line px-4 py-4 text-base font-semibold text-fg transition hover:border-morado/50"
-        >
-          🎤 Contar cómo fue el día
-        </Link>
-      </section>
 
       {/* Banner del día de la cita con las preguntas anotadas (§4.4) */}
       {esHoy && proxima && (
@@ -168,6 +157,21 @@ export default function HoyPage() {
           )}
         </section>
       )}
+
+      {/* Aviso de próxima toma registrable de un toque (spec §7) */}
+      <AvisoToma />
+
+      {/* Añadir ahora: foto, archivo o contarlo (spec §2) */}
+      <section className="space-y-2">
+        <p className="px-1 text-xs text-muted">Añadir ahora</p>
+        <CapturaAnalitica origen="hoy" />
+        <Link
+          href="/capturar"
+          className="flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl border border-line px-4 py-4 text-base font-semibold text-fg transition hover:border-morado/50"
+        >
+          🎤 Contar cómo fue el día
+        </Link>
+      </section>
 
       {/* Recordatorio suave de backup (§4.6) */}
       {ajustes && necesitaRecordatorio(ajustes) && (
