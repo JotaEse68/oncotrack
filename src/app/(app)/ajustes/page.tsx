@@ -7,6 +7,7 @@ import { cambiarTema } from "@/lib/tema";
 import { CARD_CLS } from "../_components/ui";
 import { SeccionPin } from "./_components/SeccionPin";
 import { SeccionBackup } from "./_components/SeccionBackup";
+import { SeccionAvisos } from "./_components/SeccionAvisos";
 
 export default function AjustesPage() {
   const ajustes = useLiveQuery(() => getAjustes());
@@ -53,6 +54,8 @@ export default function AjustesPage() {
       <SeccionPin />
 
       <SeccionBackup />
+
+      <SeccionAvisos />
 
       <section className="overflow-hidden rounded-2xl border border-line bg-surface/40">
         <Link

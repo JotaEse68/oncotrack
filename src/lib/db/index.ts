@@ -102,6 +102,8 @@ export interface Ajustes {
   registrosDesdeBackup: number;
   syncActivado: 0 | 1;
   onboardingVisto: 0 | 1;
+  avisosActivados?: 0 | 1;
+  ultimoAvisoISO?: string; // yyyy-mm-dd del último aviso mostrado (lo escribe el SW)
 }
 
 export const db = new Dexie("oncotrack") as Dexie & {
