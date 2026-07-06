@@ -82,6 +82,14 @@ function Contenido() {
           >
             Configurar ahora (hay guía paso a paso)
           </button>
+          <a
+            href="https://platform.openai.com/api-keys"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-11 w-full items-center justify-center rounded-lg border border-line px-4 py-2.5 text-sm text-muted transition hover:border-morado/50 hover:text-fg"
+          >
+            Abrir la página de claves de OpenAI →
+          </a>
           <p className="text-center text-xs text-muted">
             o déjalo para más tarde, desde Ajustes
           </p>

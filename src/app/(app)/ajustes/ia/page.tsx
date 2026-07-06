@@ -17,12 +17,6 @@ import {
 
 const PASOS_TUTORIAL = [
   {
-    n: "1",
-    titulo: "Entra en la web del proveedor",
-    detalle:
-      "Por ejemplo platform.openai.com → inicia sesión → menú \"API keys\".",
-  },
-  {
     n: "2",
     titulo: "Crea una clave nueva",
     detalle: "Botón \"Create new secret key\". Ponle el nombre que quieras.",
@@ -96,6 +90,26 @@ export default function AjustesIAPage() {
         <h2 className="text-xs font-medium uppercase tracking-wider text-muted">
           Cómo conseguir tu clave
         </h2>
+        {/* Paso 1 sin fricción (spec §4): un toque y ya estás en la página */}
+        <div className="mt-3 flex gap-3">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-morado/15 text-sm font-semibold text-morado">
+            1
+          </span>
+          <a
+            href="https://platform.openai.com/api-keys"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${BTN_SECUNDARIO} flex flex-1 items-center justify-between border-morado/60 text-fg`}
+          >
+            Abrir la página de claves de OpenAI
+            <span aria-hidden className="text-morado">
+              →
+            </span>
+          </a>
+        </div>
+        <p className="mt-1.5 pl-10 text-xs leading-5 text-muted">
+          Inicia sesión si te lo pide — es la web oficial de OpenAI.
+        </p>
         <ol className="mt-3 space-y-3">
           {PASOS_TUTORIAL.map((p) => (
             <li key={p.n} className="flex gap-3">
