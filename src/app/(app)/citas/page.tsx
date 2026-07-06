@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db, contarRegistroNuevo, type Cita, type Pregunta } from "@/lib/db";
 import { diasHasta, textoCountdown } from "@/lib/fechas";
+import { descargarICS, icsCita } from "@/lib/calendario";
 import {
   INPUT_CLS,
   BTN_PRIMARIO,
@@ -106,6 +107,15 @@ function TarjetaCita({
       </p>
       {cita.notas && (
         <p className="mt-2 text-xs leading-5 text-muted">{cita.notas}</p>
+      )}
+      {/* El aviso lo da el calendario del móvil — sin servidor (spec avisos) */}
+      {dias >= 0 && (
+        <button
+          onClick={() => descargarICS(`cita-${cita.id}.ics`, icsCita(cita))}
+          className="mt-3 flex min-h-11 w-full items-center justify-center rounded-lg border border-line px-4 py-2.5 text-sm text-muted transition hover:border-morado/50 hover:text-fg"
+        >
+          📅 Añadir a mi calendario
+        </button>
       )}
       <ListaPreguntas preguntas={deEsta} />
       <FormPregunta citaId={cita.id} />

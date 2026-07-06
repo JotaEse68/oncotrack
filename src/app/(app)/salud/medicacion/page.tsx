@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db, contarRegistroNuevo } from "@/lib/db";
+import { diasHasta } from "@/lib/fechas";
+import { descargarICS, icsToma } from "@/lib/calendario";
 import {
   INPUT_CLS,
   BTN_PRIMARIO,
@@ -150,6 +152,17 @@ export default function MedicacionPage() {
                   ? "Toma registrada ✓"
                   : "Registrar toma de hoy"}
               </button>
+              {/* El aviso lo da el calendario del móvil (spec avisos) */}
+              {m.proximaFecha && diasHasta(m.proximaFecha) >= 0 && (
+                <button
+                  onClick={() =>
+                    descargarICS(`toma-${m.id}.ics`, icsToma(m))
+                  }
+                  className={`${BTN_SECUNDARIO} mt-2 w-full`}
+                >
+                  📅 Añadir a mi calendario
+                </button>
+              )}
               {m.historial.length > 0 && (
                 <p className="mt-2 text-xs text-muted">
                   {m.historial.length}{" "}
