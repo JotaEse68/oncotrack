@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./_components/ThemeProvider";
 import { LockGate } from "./_components/LockGate";
 import { RegistroSW } from "./_components/RegistroSW";
+import { RecuperacionActualizacion } from "./_components/RecuperacionActualizacion";
 import { SCRIPT_ANTIFLASH } from "@/lib/tema";
 
 const geistSans = Geist({
@@ -44,6 +45,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: SCRIPT_ANTIFLASH }} />
         <ThemeProvider />
         <RegistroSW />
+        <RecuperacionActualizacion />
         <LockGate>{children}</LockGate>
       </body>
     </html>
