@@ -48,7 +48,7 @@ export default function SesionesPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Apoyo · Mis sesiones
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -122,7 +122,7 @@ export default function SesionesPage() {
                 <p className="mt-1 text-xs leading-5 text-muted">{s.notas}</p>
               )}
               {s.proximaSesion && (
-                <p className="tabular mt-1 text-xs text-jade">
+                <p className="tabular mt-1 text-xs text-morado">
                   Próxima: {fechaLegible(s.proximaSesion)}
                 </p>
               )}

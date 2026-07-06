@@ -40,7 +40,7 @@ export default function AsistentePage() {
     return (
       <div className="mx-auto max-w-md space-y-6">
         <header>
-          <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+          <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
             Apoyo · Acompañamiento
           </p>
           <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -65,7 +65,7 @@ export default function AsistentePage() {
             localStorage.setItem(CLAVE_PRIMERA_VEZ, "1");
             setPrimeraVez(false);
           }}
-          className="min-h-12 w-full rounded-lg bg-jade px-4 py-3 text-sm font-semibold text-ink transition hover:bg-jade/90"
+          className="min-h-12 w-full rounded-lg bg-morado px-4 py-3 text-sm font-semibold text-ink transition hover:bg-morado/90"
         >
           Entendido, entrar
         </button>
@@ -106,7 +106,7 @@ export default function AsistentePage() {
             Este espacio usa tu propia IA para conversar.{" "}
             <Link
               href="/ajustes/ia"
-              className="text-jade underline-offset-2 hover:underline"
+              className="text-morado underline-offset-2 hover:underline"
             >
               Conéctala en Ajustes
             </Link>{" "}
@@ -128,7 +128,7 @@ export default function AsistentePage() {
                 key={m.id}
                 className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-6 ${
                   m.rol === "user"
-                    ? "ml-auto bg-jade/15 text-fg"
+                    ? "ml-auto bg-morado/15 text-fg"
                     : "mr-auto border border-line bg-surface/60 text-fg"
                 }`}
               >
@@ -141,7 +141,7 @@ export default function AsistentePage() {
             <div ref={finRef} />
           </div>
 
-          {error && <p className="px-1 text-xs text-clay">{error}</p>}
+          {error && <p className="px-1 text-xs text-error">{error}</p>}
 
           <div className="flex gap-2">
             <textarea
@@ -160,7 +160,7 @@ export default function AsistentePage() {
             <button
               onClick={mandar}
               disabled={ocupado || !texto.trim()}
-              className="min-h-11 shrink-0 self-end rounded-lg bg-jade px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-jade/90 disabled:opacity-50"
+              className="min-h-11 shrink-0 self-end rounded-lg bg-morado px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-morado/90 disabled:opacity-50"
             >
               Enviar
             </button>

@@ -12,13 +12,13 @@ export function EmptyState({
   accion?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center gap-4 px-6 py-10 text-center">
+    <div className="textura-cebra flex flex-col items-center gap-4 rounded-2xl px-6 py-10 text-center">
       <svg
         width="18"
         height="56"
         viewBox="0 0 18 56"
         aria-hidden
-        className="text-jade/50"
+        className="text-muted/60"
       >
         <line
           x1="9"

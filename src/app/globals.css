@@ -1,35 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  /* Tema claro cálido por defecto (§3) — crema/hueso, nada de blanco frío
-     de hospital. Los NOMBRES de token se mantienen: ink = fondo base. */
-  --color-ink: #f7f3ee;
-  --color-surface: #fffdf9;
-  --color-surface2: #f0e9df;
-  --color-line: #e2d8c9;
-  --color-fg: #253238;
-  --color-muted: #5f7370;
-  /* Acentos jade/arcilla oscurecidos para contraste AA sobre fondo claro */
-  --color-jade: #2e7a6c;
-  --color-jade-dim: #5fb6a6;
-  --color-clay: #a96e42;
+  /* Paleta definitiva (§3): cebra + morado páncreas.
+     Claro = base; oscuro = la misma escala invertida (no otra paleta).
+     ink = fondo de página (nombre histórico de token, se mantiene). */
+  --color-ink: #ffffff;
+  --color-surface: #f7f7f8;
+  --color-surface2: #efeff1;
+  --color-line: #e4e4e7;
+  --color-fg: #18181b;
+  --color-muted: #71717a;
+  /* Morado páncreas — acento PUNTUAL: nav activa, links, botón principal.
+     Nunca fondo de bloques grandes (§3, regla de uso). */
+  --color-morado: #7c5cd4;
+  /* Solo errores de formulario/red — jamás sobre valores clínicos (§6). */
+  --color-error: #b3382e;
 
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-/* Tema oscuro opcional (Ajustes → Apariencia) — la paleta original */
+/* Modo oscuro: misma escala, invertida (§3) */
 html[data-theme="oscuro"] {
-  --color-ink: #0f1518;
-  --color-surface: #172127;
-  --color-surface2: #1e2a31;
-  --color-line: #26363d;
-  --color-fg: #e7edeb;
-  --color-muted: #8ca09b;
-  --color-jade: #5fb6a6;
-  --color-jade-dim: #3e7e73;
-  --color-clay: #d6a17a;
+  --color-ink: #141416;
+  --color-surface: #1f1f22;
+  --color-surface2: #29292d;
+  --color-line: #2e2e33;
+  --color-fg: #f4f4f5;
+  --color-muted: #a1a1aa;
+  --color-morado: #a78bfa;
+  --color-error: #e5928a;
 }
 
 html {
@@ -43,7 +44,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-jade);
+  outline: 2px solid var(--color-morado);
   outline-offset: 2px;
 }
 
@@ -51,6 +52,16 @@ body {
 .tabular {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-variant-numeric: tabular-nums;
+}
+
+/* Textura cebra (§3): rayas finas casi imperceptibles (≈4%), guiño al lazo
+   de cebra de TNE. Solo en zonas vacías o separadores — nunca estampado. */
+.textura-cebra {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in srgb, var(--color-fg) 3%, transparent) 0 1px,
+    transparent 1px 10px
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {

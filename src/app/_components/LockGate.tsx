@@ -54,7 +54,7 @@ export function LockGate({ children }: { children: ReactNode }) {
 
   if (bloqueado) {
     return (
-      <div className="flex min-h-dvh flex-col items-center justify-center gap-8 bg-ink px-6 py-10">
+      <div className="textura-cebra flex min-h-dvh flex-col items-center justify-center gap-8 bg-ink px-6 py-10">
         <PinPad
           titulo="OncoTrack"
           subtitulo="Escribe tu PIN para entrar"
@@ -96,7 +96,7 @@ export function LockGate({ children }: { children: ReactNode }) {
                   sessionStorage.setItem(CLAVE_SESION, "1");
                   setDesbloqueado(true);
                 }}
-                className="min-h-11 rounded-lg bg-jade px-3 py-2 text-sm font-semibold text-ink"
+                className="min-h-11 rounded-lg bg-morado px-3 py-2 text-sm font-semibold text-ink"
               >
                 Quitar el PIN
               </button>

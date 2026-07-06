@@ -28,7 +28,7 @@ export default function ApoyoPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Apoyo
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -41,7 +41,7 @@ export default function ApoyoPage() {
           <Link
             key={s.href}
             href={s.href}
-            className="flex min-h-11 items-center justify-between rounded-2xl border border-line bg-surface/40 p-5 transition hover:border-jade/50"
+            className="flex min-h-11 items-center justify-between rounded-2xl border border-line bg-surface/40 p-5 transition hover:border-morado/50"
           >
             <span>
               <span className="block text-sm font-medium text-fg">
@@ -51,7 +51,7 @@ export default function ApoyoPage() {
                 {s.detalle}
               </span>
             </span>
-            <span aria-hidden className="text-jade">
+            <span aria-hidden className="text-morado">
               →
             </span>
           </Link>

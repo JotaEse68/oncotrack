@@ -78,10 +78,10 @@ export function SeccionBackup() {
         {estado === "generando" ? "Preparando…" : "Guardar copia de mis datos"}
       </button>
       {estado === "hecho" && (
-        <p className="mt-2 text-xs text-jade">Copia guardada. Bien hecho.</p>
+        <p className="mt-2 text-xs text-morado">Copia guardada. Bien hecho.</p>
       )}
       {estado === "error" && (
-        <p className="mt-2 text-xs text-clay">
+        <p className="mt-2 text-xs text-error">
           No se pudo generar la copia — inténtalo de nuevo.
         </p>
       )}

@@ -79,7 +79,7 @@ export default function AjustesIAPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Ajustes · Tu propia IA
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -99,7 +99,7 @@ export default function AjustesIAPage() {
         <ol className="mt-3 space-y-3">
           {PASOS_TUTORIAL.map((p) => (
             <li key={p.n} className="flex gap-3">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-jade/15 text-sm font-semibold text-jade">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-morado/15 text-sm font-semibold text-morado">
                 {p.n}
               </span>
               <span>
@@ -179,12 +179,12 @@ export default function AjustesIAPage() {
           {prueba === "probando" ? "Probando…" : "Probar conexión"}
         </button>
         {prueba === "ok" && (
-          <p className="text-xs text-jade">
+          <p className="text-xs text-morado">
             Conexión correcta. Todo listo para usar la cámara.
           </p>
         )}
         {prueba && prueba !== "ok" && prueba !== "probando" && (
-          <p className="text-xs text-clay">{prueba}</p>
+          <p className="text-xs text-error">{prueba}</p>
         )}
       </form>
 

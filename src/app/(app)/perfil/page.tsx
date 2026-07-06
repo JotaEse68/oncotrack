@@ -5,7 +5,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/lib/db";
 
 const INPUT_CLS =
-  "w-full rounded-lg border border-line bg-ink px-3 py-2.5 text-sm text-fg outline-none transition focus:border-jade/70 focus:ring-2 focus:ring-jade/20";
+  "w-full rounded-lg border border-line bg-ink px-3 py-2.5 text-sm text-fg outline-none transition focus:border-morado/70 focus:ring-2 focus:ring-morado/20";
 
 export default function PerfilPage() {
   const perfil = useLiveQuery(() => db.perfil.get(1));
@@ -29,7 +29,7 @@ export default function PerfilPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Tus datos
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -79,7 +79,7 @@ export default function PerfilPage() {
         </label>
         <button
           type="submit"
-          className="min-h-11 w-full rounded-lg bg-jade px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-jade/90"
+          className="min-h-11 w-full rounded-lg bg-morado px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-morado/90"
         >
           {guardado ? "Guardado ✓" : "Guardar"}
         </button>

@@ -15,7 +15,7 @@ export default function AjustesPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Ajustes
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -40,8 +40,8 @@ export default function AjustesPage() {
               aria-pressed={tema === valor}
               className={`min-h-11 rounded-lg border px-4 py-2.5 text-sm transition ${
                 tema === valor
-                  ? "border-jade bg-jade/10 font-semibold text-jade"
-                  : "border-line text-muted hover:border-jade/50 hover:text-fg"
+                  ? "border-morado bg-morado/10 font-semibold text-morado"
+                  : "border-line text-muted hover:border-morado/50 hover:text-fg"
               }`}
             >
               {etiqueta}
@@ -65,7 +65,7 @@ export default function AjustesPage() {
               Nombre, nacimiento, diagnóstico
             </span>
           </span>
-          <span aria-hidden className="text-jade">
+          <span aria-hidden className="text-morado">
             →
           </span>
         </Link>
@@ -79,7 +79,7 @@ export default function AjustesPage() {
               Enlace temporal cifrado, sin servidores
             </span>
           </span>
-          <span aria-hidden className="text-jade">
+          <span aria-hidden className="text-morado">
             →
           </span>
         </Link>
@@ -93,7 +93,7 @@ export default function AjustesPage() {
               Para leer analíticas con la cámara (opcional)
             </span>
           </span>
-          <span aria-hidden className="text-jade">
+          <span aria-hidden className="text-morado">
             →
           </span>
         </Link>

@@ -120,7 +120,7 @@ export function SeccionPin() {
         </div>
       )}
 
-      {aviso && <p className="mt-3 text-xs text-jade">{aviso}</p>}
+      {aviso && <p className="mt-3 text-xs text-morado">{aviso}</p>}
     </section>
   );
 }

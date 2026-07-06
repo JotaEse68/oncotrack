@@ -27,13 +27,13 @@ export function BottomNav() {
             href={it.href}
             aria-current={active ? "page" : undefined}
             className={`relative py-3.5 text-center text-xs font-medium transition ${
-              active ? "text-jade" : "text-muted hover:text-fg"
+              active ? "text-morado" : "text-muted hover:text-fg"
             }`}
           >
             {active && (
               <span
                 aria-hidden
-                className="absolute inset-x-0 top-0 mx-auto h-px w-8 bg-jade"
+                className="absolute inset-x-0 top-0 mx-auto h-px w-8 bg-morado"
               />
             )}
             {it.label}

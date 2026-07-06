@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Tu evolución, tu medicación y tus citas — en un solo sitio, solo tuyo.",
     start_url: "/hoy",
     display: "standalone",
-    background_color: "#f7f3ee",
-    theme_color: "#5fb6a6",
+    background_color: "#ffffff",
+    theme_color: "#7c5cd4",
     icons: [
       {
         src: "/icon.svg",

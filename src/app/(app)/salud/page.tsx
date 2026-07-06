@@ -38,7 +38,7 @@ export default function SaludPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Salud
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -51,7 +51,7 @@ export default function SaludPage() {
           <Link
             key={s.href}
             href={s.href}
-            className="flex min-h-11 items-center justify-between rounded-2xl border border-line bg-surface/40 p-5 transition hover:border-jade/50"
+            className="flex min-h-11 items-center justify-between rounded-2xl border border-line bg-surface/40 p-5 transition hover:border-morado/50"
           >
             <span>
               <span className="block text-sm font-medium text-fg">
@@ -61,7 +61,7 @@ export default function SaludPage() {
                 {s.detalle}
               </span>
             </span>
-            <span className="tabular text-sm text-jade">
+            <span className="tabular text-sm text-muted">
               {contadores?.[s.href] ?? ""}
             </span>
           </Link>

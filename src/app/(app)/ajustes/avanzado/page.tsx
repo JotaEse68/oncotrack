@@ -97,7 +97,7 @@ export default function AvanzadoPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Ajustes · Avanzado
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -145,7 +145,7 @@ export default function AvanzadoPage() {
                 await saveAjustes({ syncActivado: 1 });
                 setConfirmando(false);
               }}
-              className="min-h-11 rounded-lg bg-jade px-3 py-2 text-sm font-semibold text-ink"
+              className="min-h-11 rounded-lg bg-morado px-3 py-2 text-sm font-semibold text-ink"
             >
               Sí, activar
             </button>
@@ -194,7 +194,7 @@ export default function AvanzadoPage() {
             Subir mi copia
           </button>
           {confirmarDescarga ? (
-            <div className="space-y-2 rounded-xl border border-clay/40 bg-clay/10 p-3">
+            <div className="space-y-2 rounded-xl border border-error/40 bg-error/10 p-3">
               <p className="text-sm leading-6 text-fg">
                 Esto reemplaza lo que hay en este móvil por la copia subida.
                 ¿Continuar?
@@ -209,7 +209,7 @@ export default function AvanzadoPage() {
                 <button
                   onClick={descargar}
                   disabled={ocupado}
-                  className="min-h-11 rounded-lg bg-clay px-3 py-2 text-sm font-semibold text-ink disabled:opacity-60"
+                  className="min-h-11 rounded-lg bg-error px-3 py-2 text-sm font-semibold text-ink disabled:opacity-60"
                 >
                   Sí, traer copia
                 </button>
@@ -252,7 +252,7 @@ export default function AvanzadoPage() {
         </section>
       )}
 
-      {estado && <p className="px-1 text-xs text-jade">{estado}</p>}
+      {estado && <p className="px-1 text-xs text-morado">{estado}</p>}
     </div>
   );
 }

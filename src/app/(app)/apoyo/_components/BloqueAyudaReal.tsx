@@ -6,8 +6,8 @@ import { LINEAS_AYUDA, ASOCIACIONES } from "@/lib/contenido/recursos";
  */
 export function BloqueAyudaReal({ compacto = false }: { compacto?: boolean }) {
   return (
-    <div className="rounded-2xl border border-jade/30 bg-jade/5 p-4">
-      <p className="text-xs font-medium uppercase tracking-wider text-jade">
+    <div className="rounded-2xl border border-line bg-surface2 p-4">
+      <p className="text-xs font-medium uppercase tracking-wider text-muted">
         Si la ansiedad aprieta, hay personas reales
       </p>
       <ul className="mt-2 space-y-1.5">
@@ -15,7 +15,7 @@ export function BloqueAyudaReal({ compacto = false }: { compacto?: boolean }) {
           <li key={r.nombre} className="text-sm leading-5 text-fg">
             <a
               href={`tel:${r.telefono?.replace(/\s/g, "")}`}
-              className="font-semibold text-jade underline-offset-2 hover:underline"
+              className="font-semibold text-morado underline-offset-2 hover:underline"
             >
               {r.nombre} · {r.telefono}
             </a>
@@ -32,7 +32,7 @@ export function BloqueAyudaReal({ compacto = false }: { compacto?: boolean }) {
                   href={r.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-jade underline-offset-2 hover:underline"
+                  className="text-morado underline-offset-2 hover:underline"
                 >
                   {r.nombre}
                 </a>
@@ -42,7 +42,7 @@ export function BloqueAyudaReal({ compacto = false }: { compacto?: boolean }) {
               {r.telefono && (
                 <a
                   href={`tel:${r.telefono.replace(/\s/g, "")}`}
-                  className="tabular text-jade"
+                  className="tabular text-morado"
                 >
                   {" "}
                   · {r.telefono}

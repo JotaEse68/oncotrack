@@ -41,7 +41,7 @@ export default function SintomasPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Salud · Síntomas
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -70,7 +70,7 @@ export default function SintomasPage() {
         <label className="block">
           <span className="mb-1.5 flex items-baseline justify-between text-xs font-medium text-muted">
             <span>Intensidad (0 = nada · 10 = lo peor)</span>
-            <span className="tabular text-xl font-semibold text-jade">
+            <span className="tabular text-xl font-semibold text-morado">
               {escala}
             </span>
           </span>
@@ -81,7 +81,7 @@ export default function SintomasPage() {
             max={10}
             value={escala}
             onChange={(e) => setEscala(Number(e.target.value))}
-            className="h-11 w-full accent-jade"
+            className="h-11 w-full accent-morado"
           />
         </label>
         <label className="block">

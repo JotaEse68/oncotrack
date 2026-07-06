@@ -85,7 +85,7 @@ export function PromptInstalar() {
               await evento.prompt();
               setEvento(null);
             }}
-            className="min-h-11 flex-1 rounded-lg bg-jade px-4 py-2 text-sm font-semibold text-ink transition hover:bg-jade/90"
+            className="min-h-11 flex-1 rounded-lg bg-morado px-4 py-2 text-sm font-semibold text-ink transition hover:bg-morado/90"
           >
             Añadir
           </button>

@@ -126,7 +126,7 @@ export default function RadarPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Apoyo · Radar
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -181,7 +181,7 @@ export default function RadarPage() {
         </label>
         <button
           type="submit"
-          className="min-h-11 w-full rounded-lg border border-line px-4 py-2.5 text-sm text-muted transition hover:border-jade/50 hover:text-fg"
+          className="min-h-11 w-full rounded-lg border border-line px-4 py-2.5 text-sm text-muted transition hover:border-morado/50 hover:text-fg"
         >
           {guardado ? "Guardado ✓" : "Guardar perfil"}
         </button>
@@ -210,7 +210,7 @@ export default function RadarPage() {
             IA.{" "}
             <Link
               href="/ajustes/ia"
-              className="text-jade underline-offset-2 hover:underline"
+              className="text-morado underline-offset-2 hover:underline"
             >
               Conéctala en Ajustes
             </Link>{" "}
@@ -219,12 +219,12 @@ export default function RadarPage() {
         </div>
       )}
       {estado && estado !== "buscando" && (
-        <p className="px-1 text-xs text-clay">{estado}</p>
+        <p className="px-1 text-xs text-error">{estado}</p>
       )}
 
       {(resultado || radar?.ultimoResumen) && (
-        <div className="rounded-2xl border border-jade/30 bg-jade/5 p-5">
-          <h2 className="text-xs font-medium uppercase tracking-wider text-jade">
+        <div className="rounded-2xl border border-line bg-surface2 p-5">
+          <h2 className="text-xs font-medium uppercase tracking-wider text-muted">
             En palabras normales
           </h2>
           <p className="mt-2 whitespace-pre-line text-sm leading-6 text-fg">

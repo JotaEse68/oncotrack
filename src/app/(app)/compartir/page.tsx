@@ -98,7 +98,7 @@ export default function CompartirPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Compartir
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -118,7 +118,7 @@ export default function CompartirPage() {
           <label
             key={a.valor}
             className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border p-3 transition ${
-              ambito === a.valor ? "border-jade bg-jade/10" : "border-line"
+              ambito === a.valor ? "border-morado bg-morado/10" : "border-line"
             }`}
           >
             <input
@@ -129,7 +129,7 @@ export default function CompartirPage() {
                 setAmbito(a.valor);
                 setEnlace(null);
               }}
-              className="h-5 w-5 accent-jade"
+              className="h-5 w-5 accent-morado"
             />
             <span>
               <span className="block text-sm text-fg">{a.titulo}</span>
@@ -158,7 +158,7 @@ export default function CompartirPage() {
               aria-pressed={dias === c.dias}
               className={`min-h-11 rounded-lg border px-3 py-2 text-sm transition ${
                 dias === c.dias
-                  ? "border-jade bg-jade/10 font-semibold text-jade"
+                  ? "border-morado bg-morado/10 font-semibold text-morado"
                   : "border-line text-muted"
               }`}
             >
@@ -188,7 +188,7 @@ export default function CompartirPage() {
           </button>
         </div>
       )}
-      {aviso && <p className="px-1 text-xs text-jade">{aviso}</p>}
+      {aviso && <p className="px-1 text-xs text-morado">{aviso}</p>}
 
       <p className="px-1 text-xs leading-5 text-muted">
         Pasada la fecha, la página deja de mostrar el contenido. No es un

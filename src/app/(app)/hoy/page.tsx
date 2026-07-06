@@ -33,7 +33,7 @@ export default function HoyPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Hoy · <span className="text-muted">{hoy}</span>
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -43,7 +43,7 @@ export default function HoyPage() {
 
       {/* Banner del día de la cita con las preguntas anotadas (§4.4) */}
       {esHoy && proxima && (
-        <div className="rounded-2xl border border-jade/40 bg-jade/10 p-5">
+        <div className="rounded-2xl border border-line bg-surface2 p-5">
           <p className="text-sm font-medium text-fg">
             Hoy tienes cita
             {proxima.especialista && <> con {proxima.especialista}</>}
@@ -62,7 +62,7 @@ export default function HoyPage() {
           </p>
           {pendientesDeHoy.length > 0 && (
             <details className="mt-2">
-              <summary className="cursor-pointer text-xs text-jade">
+              <summary className="cursor-pointer text-xs text-morado">
                 Ver tus preguntas
               </summary>
               <ul className="mt-2 space-y-2">
@@ -75,7 +75,7 @@ export default function HoyPage() {
                           resuelta: e.target.checked ? 1 : 0,
                         })
                       }
-                      className="mt-0.5 h-5 w-5 accent-jade"
+                      className="mt-0.5 h-5 w-5 accent-morado"
                       aria-label={`Marcar resuelta: ${p.texto}`}
                     />
                     <span className="text-sm leading-5 text-fg">{p.texto}</span>
@@ -89,10 +89,10 @@ export default function HoyPage() {
 
       {/* Countdown a la próxima cita (§4.3) */}
       {proxima && !esHoy && diasProxima !== undefined && (
-        <Link href="/citas" className={`block ${CARD_CLS} transition hover:border-jade/50`}>
+        <Link href="/citas" className={`block ${CARD_CLS} transition hover:border-morado/50`}>
           <p className="text-xs text-muted">Próxima cita</p>
           <p className="mt-1 text-sm text-fg">
-            <span className="font-semibold text-jade">
+            <span className="font-semibold text-morado">
               {textoCountdown(diasProxima)}
             </span>
             {proxima.especialista && <>: {proxima.especialista}</>}
@@ -107,7 +107,7 @@ export default function HoyPage() {
       {ajustes && necesitaRecordatorio(ajustes) && (
         <Link
           href="/ajustes"
-          className="block rounded-2xl border border-clay/40 bg-clay/10 p-5 transition hover:border-clay/60"
+          className="block rounded-2xl border border-line bg-surface2 p-5 transition hover:border-morado/50"
         >
           <p className="text-xs text-muted">Cuando tengas un momento</p>
           <p className="mt-1 text-sm leading-6 text-fg">
@@ -121,7 +121,7 @@ export default function HoyPage() {
       {!perfil?.nombre && (
         <Link
           href="/perfil"
-          className="flex items-center justify-between rounded-2xl border border-line bg-surface/40 p-5 transition hover:border-jade/50"
+          className="flex items-center justify-between rounded-2xl border border-line bg-surface/40 p-5 transition hover:border-morado/50"
         >
           <span>
             <span className="block text-xs text-muted">Para empezar</span>
@@ -129,7 +129,7 @@ export default function HoyPage() {
               Cuéntanos tu nombre
             </span>
           </span>
-          <span aria-hidden className="text-jade">
+          <span aria-hidden className="text-morado">
             →
           </span>
         </Link>

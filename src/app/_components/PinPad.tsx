@@ -57,15 +57,15 @@ export function PinPad({
             className={`h-3.5 w-3.5 rounded-full border transition ${
               i < pin.length
                 ? error
-                  ? "border-clay bg-clay"
-                  : "border-jade bg-jade"
+                  ? "border-error bg-error"
+                  : "border-morado bg-morado"
                 : "border-line bg-transparent"
             }`}
           />
         ))}
       </div>
       {error && (
-        <p className="text-xs text-clay" role="alert">
+        <p className="text-xs text-error" role="alert">
           Ese no es el PIN — prueba otra vez, con calma.
         </p>
       )}
@@ -80,7 +80,7 @@ export function PinPad({
               onClick={() => pulsar(t)}
               disabled={ocupado}
               aria-label={t === "⌫" ? "Borrar" : t}
-              className="min-h-14 rounded-xl border border-line bg-surface/60 text-xl font-medium text-fg transition hover:border-jade/50 active:bg-jade/10 disabled:opacity-50"
+              className="min-h-14 rounded-xl border border-line bg-surface/60 text-xl font-medium text-fg transition hover:border-morado/50 active:bg-morado/10 disabled:opacity-50"
             >
               {t}
             </button>

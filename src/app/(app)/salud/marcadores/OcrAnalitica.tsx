@@ -37,7 +37,7 @@ export function OcrAnalitica() {
     return (
       <p className="px-1 text-xs leading-5 text-muted">
         ¿Quieres rellenar esto con una foto?{" "}
-        <Link href="/ajustes/ia" className="text-jade underline-offset-2 hover:underline">
+        <Link href="/ajustes/ia" className="text-morado underline-offset-2 hover:underline">
           Conecta tu IA en Ajustes
         </Link>
         .
@@ -110,12 +110,12 @@ export function OcrAnalitica() {
       <button
         onClick={() => camaraRef.current?.click()}
         disabled={estado === "leyendo"}
-        className="flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-jade px-4 py-4 text-base font-semibold text-ink transition hover:bg-jade/90 disabled:opacity-60"
+        className="flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-morado px-4 py-4 text-base font-semibold text-ink transition hover:bg-morado/90 disabled:opacity-60"
       >
         {estado === "leyendo" ? "Leyendo la foto…" : "📷 Foto a la analítica"}
       </button>
       {estado && estado !== "leyendo" && (
-        <p className="px-1 text-xs text-clay">{estado}</p>
+        <p className="px-1 text-xs text-error">{estado}</p>
       )}
 
       {revision && (

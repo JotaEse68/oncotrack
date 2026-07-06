@@ -56,7 +56,7 @@ function Contenido() {
           </p>
           <button
             onClick={() => terminar("/ajustes")}
-            className="min-h-11 w-full rounded-lg border border-jade/50 px-4 py-2.5 text-sm font-medium text-jade transition hover:bg-jade/10"
+            className="min-h-11 w-full rounded-lg border border-morado/50 px-4 py-2.5 text-sm font-medium text-morado transition hover:bg-morado/10"
           >
             Activar ahora en Ajustes
           </button>
@@ -78,7 +78,7 @@ function Contenido() {
           </p>
           <button
             onClick={() => terminar("/ajustes/ia")}
-            className="min-h-11 w-full rounded-lg border border-jade/50 px-4 py-2.5 text-sm font-medium text-jade transition hover:bg-jade/10"
+            className="min-h-11 w-full rounded-lg border border-morado/50 px-4 py-2.5 text-sm font-medium text-morado transition hover:bg-morado/10"
           >
             Configurar ahora (hay guía paso a paso)
           </button>
@@ -114,7 +114,7 @@ function Contenido() {
             <span
               key={i}
               className={`h-1.5 rounded-full transition-all ${
-                i === paso ? "w-6 bg-jade" : "w-1.5 bg-line"
+                i === paso ? "w-6 bg-morado" : "w-1.5 bg-line"
               }`}
             />
           ))}
@@ -128,7 +128,7 @@ function Contenido() {
       </div>
 
       <div className="flex flex-1 flex-col justify-center py-8">
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Bienvenida · {paso + 1} de {TOTAL}
         </p>
         <h1 className="mt-2 font-display text-3xl font-semibold leading-tight text-fg">
@@ -147,7 +147,7 @@ function Contenido() {
         </button>
         <button
           onClick={() => (esUltimo ? terminar() : setPaso((p) => p + 1))}
-          className="min-h-12 rounded-lg bg-jade px-4 py-3 text-sm font-semibold text-ink transition hover:bg-jade/90"
+          className="min-h-12 rounded-lg bg-morado px-4 py-3 text-sm font-semibold text-ink transition hover:bg-morado/90"
         >
           {esUltimo ? "Empezar" : "Siguiente"}
         </button>

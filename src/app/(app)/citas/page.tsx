@@ -25,7 +25,7 @@ function ListaPreguntas({ preguntas }: { preguntas: Pregunta[] }) {
             onChange={(e) =>
               db.preguntas.update(p.id!, { resuelta: e.target.checked ? 1 : 0 })
             }
-            className="mt-0.5 h-5 w-5 accent-jade"
+            className="mt-0.5 h-5 w-5 accent-morado"
             aria-label={`Marcar resuelta: ${p.texto}`}
           />
           <span
@@ -67,7 +67,7 @@ function FormPregunta({ citaId }: { citaId?: number }) {
       <button
         onClick={agregar}
         aria-label="Añadir pregunta"
-        className="min-h-11 shrink-0 rounded-lg border border-line px-4 text-sm text-jade transition hover:border-jade/50"
+        className="min-h-11 shrink-0 rounded-lg border border-line px-4 text-sm text-morado transition hover:border-morado/50"
       >
         +
       </button>
@@ -92,7 +92,7 @@ function TarjetaCita({
           {cita.especialista || "Cita médica"}
         </span>
         {dias >= 0 && (
-          <span className="text-xs font-medium text-jade">
+          <span className="text-xs font-medium text-morado">
             {textoCountdown(dias)}
           </span>
         )}
@@ -136,7 +136,7 @@ export default function CitasPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Citas
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">

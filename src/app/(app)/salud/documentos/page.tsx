@@ -19,7 +19,7 @@ function Miniatura({ doc, onOpen }: { doc: Documento; onOpen: () => void }) {
   return (
     <button
       onClick={onOpen}
-      className="overflow-hidden rounded-xl border border-line bg-surface/40 text-left transition hover:border-jade/50"
+      className="overflow-hidden rounded-xl border border-line bg-surface/40 text-left transition hover:border-morado/50"
     >
       {url ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -56,7 +56,7 @@ function Visor({ doc, onClose }: { doc: Documento; onClose: () => void }) {
     >
       <div className="flex items-center justify-between pb-3">
         <span className="truncate text-sm text-fg">{doc.nombre}</span>
-        <button className="min-h-11 px-3 text-sm text-jade">Cerrar</button>
+        <button className="min-h-11 px-3 text-sm text-morado">Cerrar</button>
       </div>
       {url &&
         (doc.tipo.startsWith("image/") ? (
@@ -95,7 +95,7 @@ export default function DocumentosPage() {
   return (
     <div className="mx-auto max-w-md space-y-6">
       <header>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-jade">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.24em] text-muted">
           Salud · Documentos
         </p>
         <h1 className="mt-1 font-display text-2xl font-semibold text-fg">
@@ -121,7 +121,7 @@ export default function DocumentosPage() {
       />
       <button
         onClick={() => camaraRef.current?.click()}
-        className="flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-jade px-4 py-4 text-base font-semibold text-ink transition hover:bg-jade/90"
+        className="flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl bg-morado px-4 py-4 text-base font-semibold text-ink transition hover:bg-morado/90"
       >
         📷 Hacer foto a un documento
       </button>
