@@ -169,8 +169,15 @@ export default function CapturarPage() {
       }
       if (nuevo) setTexto((t) => (t ? `${t} ${nuevo.trim()}` : nuevo.trim()));
     };
+    // El navegador puede cortar la escucha solo (silencio): avisamos siempre
     rec.onend = () => setDictando(false);
-    rec.onerror = () => setDictando(false);
+    rec.onerror = () => {
+      setDictando(false);
+      setError(
+        "No se pudo usar el micrófono. Puedes escribir, o dictar con el micrófono de tu teclado."
+      );
+    };
+    setError("");
     rec.start();
     setDictando(true);
   }
@@ -242,6 +249,18 @@ export default function CapturarPage() {
             aria-label="Cuenta cómo fue tu día"
             className={`${INPUT_CLS} resize-y text-base leading-6`}
           />
+          {/* Estado de grabación inequívoco (fix "no sé si está grabando") */}
+          {dictando && (
+            <p
+              role="status"
+              className="flex items-center gap-2 rounded-lg border border-morado bg-morado/10 px-3 py-2.5 text-sm font-medium text-morado"
+            >
+              <span aria-hidden className="animate-pulse">
+                ●
+              </span>
+              Grabando — habla con calma y toca ◼ cuando termines
+            </p>
+          )}
           <div className="flex items-center gap-2">
             {hayVoz && (
               <button
@@ -259,16 +278,32 @@ export default function CapturarPage() {
             {conIA && (
               <button
                 onClick={entender}
-                disabled={interpretando || !texto.trim()}
+                disabled={interpretando || !texto.trim() || dictando}
                 className={`${BTN_PRIMARIO} flex-1`}
               >
                 {interpretando ? "Leyendo lo que contaste…" : "Entender lo que conté"}
               </button>
             )}
           </div>
-          <p className="text-xs leading-5 text-muted">
-            También puedes dictar con el micrófono de tu teclado.
-          </p>
+          {/* Siguiente paso siempre claro (fix "cuando termino, ¿agrego o no?") */}
+          {!dictando && texto.trim() && conIA && !interpretando && (
+            <p role="status" className="text-xs leading-5 text-muted">
+              Tu texto está listo. Toca{" "}
+              <span className="font-medium text-fg">«Entender lo que conté»</span>{" "}
+              para revisarlo y guardarlo — aún no se ha guardado nada.
+            </p>
+          )}
+          {!dictando && texto.trim() && !conIA && (
+            <p role="status" className="text-xs leading-5 text-muted">
+              El texto no se guarda solo: usa los atajos de abajo para
+              apuntarlo donde corresponda.
+            </p>
+          )}
+          {!texto.trim() && !dictando && (
+            <p className="text-xs leading-5 text-muted">
+              También puedes dictar con el micrófono de tu teclado.
+            </p>
+          )}
           {error && <p className="text-xs leading-5 text-error">{error}</p>}
         </div>
       )}
