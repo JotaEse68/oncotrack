@@ -3,16 +3,29 @@
 import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/lib/db";
-import { diasHasta, proximaCita, textoCountdown } from "@/lib/fechas";
+import { diasHasta, proximaCita } from "@/lib/fechas";
+import { agruparPorNombre } from "@/lib/marcadores";
+import { construirNarrativa } from "@/lib/narrativa";
+import { fraseDelDia } from "@/lib/contenido/frases";
 import { necesitaRecordatorio } from "@/lib/backup";
 import { CARD_CLS } from "../_components/ui";
 import { PromptInstalar } from "../_components/PromptInstalar";
+import { GuiaInicio } from "./GuiaInicio";
 
 export default function HoyPage() {
   const perfil = useLiveQuery(() => db.perfil.get(1));
-  const citas = useLiveQuery(() => db.citas.toArray());
-  const preguntas = useLiveQuery(() => db.preguntas.toArray());
   const ajustes = useLiveQuery(() => db.ajustes.get(1));
+  const datos = useLiveQuery(async () => {
+    const [marcadores, citas, preguntas, sesiones, nSintomas] =
+      await Promise.all([
+        db.marcadores.toArray(),
+        db.citas.toArray(),
+        db.preguntas.toArray(),
+        db.sesionesApoyo.toArray(),
+        db.sintomas.count(),
+      ]);
+    return { marcadores, citas, preguntas, sesiones, nSintomas };
+  });
 
   const hoy = new Date().toLocaleDateString("es-ES", {
     weekday: "long",
@@ -20,15 +33,39 @@ export default function HoyPage() {
     month: "long",
   });
 
-  const proxima = citas ? proximaCita(citas) : undefined;
-  const diasProxima = proxima ? diasHasta(proxima.fecha) : undefined;
-  const esHoy = diasProxima === 0;
+  const proxima = datos ? proximaCita(datos.citas) : undefined;
+  const esHoy = proxima ? diasHasta(proxima.fecha) === 0 : false;
   const pendientesDeHoy =
     esHoy && proxima
-      ? (preguntas ?? []).filter(
+      ? (datos?.preguntas ?? []).filter(
           (p) => p.citaId === proxima.id && p.resuelta === 0
         )
       : [];
+
+  const narrativa = datos
+    ? construirNarrativa({
+        nombre: perfil?.nombre,
+        grupos: agruparPorNombre(datos.marcadores),
+        citas: datos.citas,
+        preguntas: datos.preguntas,
+        sesiones: datos.sesiones,
+      })
+    : [];
+
+  const frase = datos
+    ? fraseDelDia({
+        nombre: perfil?.nombre,
+        grupos: agruparPorNombre(datos.marcadores),
+        citas: datos.citas,
+        preguntas: datos.preguntas,
+        sesiones: datos.sesiones,
+        totalRegistros:
+          datos.marcadores.length +
+          datos.nSintomas +
+          datos.citas.length +
+          datos.sesiones.length,
+      })
+    : null;
 
   return (
     <div className="mx-auto max-w-md space-y-6">
@@ -40,6 +77,8 @@ export default function HoyPage() {
           {perfil?.nombre ? `Hola, ${perfil.nombre}` : "Tu espacio"}
         </h1>
       </header>
+
+      <GuiaInicio />
 
       {/* Banner del día de la cita con las preguntas anotadas (§4.4) */}
       {esHoy && proxima && (
@@ -87,20 +126,25 @@ export default function HoyPage() {
         </div>
       )}
 
-      {/* Countdown a la próxima cita (§4.3) */}
-      {proxima && !esHoy && diasProxima !== undefined && (
-        <Link href="/citas" className={`block ${CARD_CLS} transition hover:border-morado/50`}>
-          <p className="text-xs text-muted">Próxima cita</p>
-          <p className="mt-1 text-sm text-fg">
-            <span className="font-semibold text-morado">
-              {textoCountdown(diasProxima)}
-            </span>
-            {proxima.especialista && <>: {proxima.especialista}</>}
-            {proxima.centro && (
-              <span className="text-muted"> · {proxima.centro}</span>
-            )}
-          </p>
-        </Link>
+      {/* Narrativa: los datos contados en frases humanas (spec §1) */}
+      {narrativa.length > 0 && (
+        <section className="space-y-3">
+          {narrativa.map((f) =>
+            f.href ? (
+              <Link
+                key={f.texto}
+                href={f.href}
+                className={`block ${CARD_CLS} transition hover:border-morado/50`}
+              >
+                <p className="text-sm leading-6 text-fg">{f.texto}</p>
+              </Link>
+            ) : (
+              <div key={f.texto} className={CARD_CLS}>
+                <p className="text-sm leading-6 text-fg">{f.texto}</p>
+              </div>
+            )
+          )}
+        </section>
       )}
 
       {/* Recordatorio suave de backup (§4.6) */}
@@ -118,24 +162,14 @@ export default function HoyPage() {
         </Link>
       )}
 
-      {!perfil?.nombre && (
-        <Link
-          href="/perfil"
-          className="flex items-center justify-between rounded-2xl border border-line bg-surface/40 p-5 transition hover:border-morado/50"
-        >
-          <span>
-            <span className="block text-xs text-muted">Para empezar</span>
-            <span className="mt-0.5 block text-sm text-fg">
-              Cuéntanos tu nombre
-            </span>
-          </span>
-          <span aria-hidden className="text-morado">
-            →
-          </span>
-        </Link>
-      )}
-
       <PromptInstalar />
+
+      {/* Frase del día (spec §8) — discreta, al pie */}
+      {frase && (
+        <p className="px-1 text-center text-xs italic leading-5 text-muted">
+          {frase}
+        </p>
+      )}
     </div>
   );
 }
