@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db, contarRegistroNuevo } from "@/lib/db";
+import { db, contarRegistroNuevo, getAjustes } from "@/lib/db";
 import {
   configDesdeAjustes,
   extraerMarcadores,
@@ -26,7 +26,7 @@ function archivoADataUrl(file: File): Promise<string> {
  * antes de guardar (§4.7). Sin clave configurada, solo se sugiere la opción.
  */
 export function OcrAnalitica() {
-  const ajustes = useLiveQuery(() => db.ajustes.get(1));
+  const ajustes = useLiveQuery(() => getAjustes());
   const camaraRef = useRef<HTMLInputElement>(null);
   const [estado, setEstado] = useState<"" | "leyendo" | string>("");
   const [revision, setRevision] = useState<MarcadorExtraido[] | null>(null);

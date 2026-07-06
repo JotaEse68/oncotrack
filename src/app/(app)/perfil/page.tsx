@@ -8,7 +8,7 @@ const INPUT_CLS =
   "w-full rounded-lg border border-line bg-ink px-3 py-2.5 text-sm text-fg outline-none transition focus:border-morado/70 focus:ring-2 focus:ring-morado/20";
 
 export default function PerfilPage() {
-  const perfil = useLiveQuery(() => db.perfil.get(1));
+  const perfil = useLiveQuery(async () => (await db.perfil.get(1)) ?? null);
   const [guardado, setGuardado] = useState(false);
 
   async function guardar(formData: FormData) {

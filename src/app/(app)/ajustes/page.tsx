@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "@/lib/db";
+import { getAjustes } from "@/lib/db";
 import { cambiarTema } from "@/lib/tema";
 import { CARD_CLS } from "../_components/ui";
 import { SeccionPin } from "./_components/SeccionPin";
 import { SeccionBackup } from "./_components/SeccionBackup";
 
 export default function AjustesPage() {
-  const ajustes = useLiveQuery(() => db.ajustes.get(1));
+  const ajustes = useLiveQuery(() => getAjustes());
   const tema = ajustes?.tema ?? "claro";
 
   return (

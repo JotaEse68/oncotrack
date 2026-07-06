@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db, saveAjustes } from "@/lib/db";
+import { getAjustes, saveAjustes } from "@/lib/db";
 import {
   cerrarSesion,
   descargarSnapshot,
@@ -19,7 +19,7 @@ import {
 } from "../../_components/ui";
 
 export default function AvanzadoPage() {
-  const ajustes = useLiveQuery(() => db.ajustes.get(1));
+  const ajustes = useLiveQuery(() => getAjustes());
   const [confirmando, setConfirmando] = useState(false);
   const [sesion, setSesion] = useState<string | null>(null);
   const [estado, setEstado] = useState("");

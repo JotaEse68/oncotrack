@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db, saveAjustes } from "@/lib/db";
+import { db, getAjustes, saveAjustes } from "@/lib/db";
 import {
   chatCompletion,
   configDesdeAjustes,
@@ -41,7 +41,7 @@ const PASOS_TUTORIAL = [
 ];
 
 export default function AjustesIAPage() {
-  const ajustes = useLiveQuery(() => db.ajustes.get(1));
+  const ajustes = useLiveQuery(() => getAjustes());
   const [verClave, setVerClave] = useState(false);
   const [prueba, setPrueba] = useState<"" | "probando" | "ok" | string>("");
   const [guardado, setGuardado] = useState(false);

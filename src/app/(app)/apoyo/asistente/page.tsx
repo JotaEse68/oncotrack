@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "@/lib/db";
+import { db, getAjustes } from "@/lib/db";
 import { configDesdeAjustes, tieneIA } from "@/lib/ia";
 import { borrarConversacion, enviarMensaje } from "@/lib/asistente";
 import { BloqueAyudaReal } from "../_components/BloqueAyudaReal";
@@ -15,7 +15,7 @@ const AVISO_CORTO =
   "Esto es un espacio para pensar en voz alta y organizar tus ideas. No es un profesional, no diagnostica, no sustituye a tu psico-oncólogo ni a tu equipo médico.";
 
 export default function AsistentePage() {
-  const ajustes = useLiveQuery(() => db.ajustes.get(1));
+  const ajustes = useLiveQuery(() => getAjustes());
   const mensajes = useLiveQuery(() =>
     db.conversacionesAsistente.orderBy("fecha").toArray()
   );

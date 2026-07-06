@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
-import { db, type RadarPerfil } from "@/lib/db";
+import { db, getAjustes, type RadarPerfil } from "@/lib/db";
 import { configDesdeAjustes, tieneIA } from "@/lib/ia";
 import {
   buscarFuentes,
@@ -48,8 +48,12 @@ function ListaFuentes({ titulo, fuentes }: { titulo: string; fuentes: Fuente[] }
 }
 
 export default function RadarPage() {
-  const ajustes = useLiveQuery(() => db.ajustes.get(1));
-  const radar = useLiveQuery(() => db.radarPerfil.get(1));
+  // OJO: db.X.get(1) resuelve undefined tanto "cargando" como "no existe
+  // fila" — con eso la pantalla se quedaba en blanco en instalaciones
+  // nuevas. getAjustes() siempre devuelve defaults, y radar usa ?? null
+  // para distinguir "sin perfil aún" (null) de "cargando" (undefined).
+  const ajustes = useLiveQuery(() => getAjustes());
+  const radar = useLiveQuery(async () => (await db.radarPerfil.get(1)) ?? null);
   const [estado, setEstado] = useState<"" | "buscando" | string>("");
   const [resultado, setResultado] = useState<{
     resumen: string;
