@@ -5,6 +5,12 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { db, contarRegistroNuevo, type Marcador } from "@/lib/db";
 import { colapsarDuplicado } from "@/lib/texto";
 import {
+  agruparPorNombre,
+  comparacionTexto,
+  type GrupoMarcador,
+} from "@/lib/marcadores";
+import { GraficaMarcador } from "./GraficaMarcador";
+import {
   INPUT_CLS,
   BTN_PRIMARIO,
   CARD_CLS,
@@ -21,22 +27,68 @@ const MARCADORES_HABITUALES = [
   "5-HIAA",
 ];
 
-/**
- * Compara un valor con el registro anterior del MISMO marcador.
- * Solo frente al propio histórico — nunca rangos genéricos ni semáforos (§4.9).
- */
-function comparacion(m: Marcador, todos: Marcador[]): string | null {
-  const anteriores = todos
-    .filter((x) => x.nombre === m.nombre && x.fecha < m.fecha)
-    .sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
-  const previo = anteriores[0];
-  if (!previo || previo.valor === 0) return null;
-  const dif = ((m.valor - previo.valor) / previo.valor) * 100;
-  const pct = Math.abs(Math.round(dif));
-  if (pct === 0) return "igual que tu última analítica";
-  return dif < 0
-    ? `un ${pct}% menos que tu última analítica`
-    : `un ${pct}% más que tu última analítica`;
+/** Tarjeta de un marcador: último valor, comparación (§4.9) y evolución. */
+function TarjetaMarcador({
+  grupo,
+  onBorrar,
+}: {
+  grupo: GrupoMarcador;
+  onBorrar: (m: Marcador) => void;
+}) {
+  const ultimo = grupo.puntos[grupo.puntos.length - 1];
+  const comparacion = comparacionTexto(grupo.puntos);
+
+  return (
+    <li className="rounded-2xl border border-line bg-surface/60 p-5">
+      <div className="flex items-baseline justify-between gap-2">
+        <h2 className="text-sm font-medium text-fg">{grupo.nombre}</h2>
+        <span className="tabular text-lg text-fg">
+          {ultimo.valor}{" "}
+          <span className="text-xs text-muted">{grupo.unidad}</span>
+        </span>
+      </div>
+      <div className="mt-0.5 flex items-baseline justify-between gap-2">
+        <span className="tabular text-xs text-muted">
+          {fechaLegible(ultimo.fecha)}
+        </span>
+        {comparacion && <span className="text-xs text-muted">{comparacion}</span>}
+      </div>
+
+      <GraficaMarcador puntos={grupo.puntos} unidad={grupo.unidad} />
+
+      <details className="mt-2">
+        <summary className="cursor-pointer py-1 text-xs text-muted">
+          {grupo.registros.length === 1
+            ? "Ver el registro"
+            : `Ver los ${grupo.registros.length} valores`}
+        </summary>
+        <ul className="mt-1 divide-y divide-line">
+          {[...grupo.registros].reverse().map((m) => (
+            <li
+              key={m.id}
+              className="flex items-baseline justify-between gap-2 py-2"
+            >
+              <span className="tabular text-xs text-muted">
+                {fechaLegible(m.fecha)}
+              </span>
+              <span className="flex items-baseline gap-2">
+                <span className="tabular text-sm text-fg">
+                  {m.valor} <span className="text-muted">{m.unidad}</span>
+                </span>
+                <button
+                  onClick={() => onBorrar(m)}
+                  aria-label={`Borrar ${m.nombre} del ${fechaLegible(m.fecha)}`}
+                  className="min-h-9 min-w-9 rounded text-muted/60 transition hover:text-error"
+                >
+                  ×
+                </button>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </li>
+  );
 }
 
 export default function MarcadoresPage() {
@@ -156,33 +208,9 @@ export default function MarcadoresPage() {
       </form>
 
       {marcadores && marcadores.length > 0 && (
-        <ul className="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface/40">
-          {marcadores.map((m) => (
-            <li key={m.id} className="group px-5 py-3">
-              <div className="flex items-baseline justify-between gap-2">
-                <span className="text-sm text-fg">{m.nombre}</span>
-                <span className="flex items-baseline gap-2">
-                  <span className="tabular text-sm text-fg">
-                    {m.valor} <span className="text-muted">{m.unidad}</span>
-                  </span>
-                  <button
-                    onClick={() => borrar(m)}
-                    aria-label={`Borrar ${m.nombre} del ${fechaLegible(m.fecha)}`}
-                    className="min-h-9 min-w-9 rounded text-muted/60 transition hover:text-error"
-                  >
-                    ×
-                  </button>
-                </span>
-              </div>
-              <div className="mt-0.5 flex items-baseline justify-between">
-                <span className="text-xs text-muted">
-                  {fechaLegible(m.fecha)}
-                </span>
-                <span className="text-xs text-muted">
-                  {comparacion(m, marcadores) ?? ""}
-                </span>
-              </div>
-            </li>
+        <ul className="space-y-3">
+          {agruparPorNombre(marcadores).map((grupo) => (
+            <TarjetaMarcador key={grupo.nombre} grupo={grupo} onBorrar={borrar} />
           ))}
         </ul>
       )}
