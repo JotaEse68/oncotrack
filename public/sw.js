@@ -4,7 +4,8 @@
  * - estáticos de Next: cache-first (tienen hash en el nombre)
  * - navegaciones: network-first con caché de respaldo para modo avión
  */
-const CACHE = "oncotrack-v1";
+// Subir la versión purga cachés viejas en el próximo arranque (ver activate)
+const CACHE = "oncotrack-v2";
 
 self.addEventListener("install", () => {
   self.skipWaiting();
