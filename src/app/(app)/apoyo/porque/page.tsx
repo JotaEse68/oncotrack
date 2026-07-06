@@ -1,3 +1,5 @@
+import { FormularioSugerencias } from "../../_components/FormularioSugerencias";
+
 /**
  * Por qué hice OncoTrack — en la voz de Jota (spec avisos-y-porque B3).
  * Contenido estático: la historia de la app y cómo sacarle partido.
@@ -82,6 +84,8 @@ export default function PorquePage() {
           </a>
         </p>
       </section>
+
+      <FormularioSugerencias />
     </div>
   );
 }

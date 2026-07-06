@@ -27,6 +27,13 @@ export function PiePagina() {
           className="text-morado underline-offset-2 hover:underline"
         >
           ¿Por qué OncoTrack?
+        </Link>{" "}
+        ·{" "}
+        <Link
+          href="/apoyo/porque#sugerencias"
+          className="text-morado underline-offset-2 hover:underline"
+        >
+          Envíame una sugerencia
         </Link>
       </p>
       <p className="text-xs leading-5 text-muted">
