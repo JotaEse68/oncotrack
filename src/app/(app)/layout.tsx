@@ -1,4 +1,5 @@
 import { BottomNav } from "./_components/BottomNav";
+import { BotonTema } from "./_components/BotonTema";
 
 export default function AppLayout({
   children,
@@ -11,6 +12,7 @@ export default function AppLayout({
         <span className="font-display text-lg font-semibold tracking-tight text-fg">
           OncoTrack
         </span>
+        <BotonTema />
       </header>
 
       <main className="flex-1 px-5 py-6">{children}</main>
