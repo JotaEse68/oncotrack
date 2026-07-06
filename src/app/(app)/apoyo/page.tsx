@@ -22,6 +22,11 @@ const SECCIONES = [
     titulo: "Mis sesiones",
     detalle: "Diario de terapia o psico-oncología, aparte del chat",
   },
+  {
+    href: "/apoyo/porque",
+    titulo: "Por qué existe esta app",
+    detalle: "La historia y cómo sacarle partido",
+  },
 ];
 
 export default function ApoyoPage() {

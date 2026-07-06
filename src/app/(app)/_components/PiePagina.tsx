@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 /**
  * Pie de página: disclaimer médico y créditos.
  * OncoTrack acompaña y ordena — la valoración clínica es siempre
@@ -19,7 +21,13 @@ export function PiePagina() {
       </p>
       <p className="text-xs leading-5 text-muted">
         App sin ánimo de lucro, creada para apoyar a pacientes con tumores
-        neuroendocrinos.
+        neuroendocrinos.{" "}
+        <Link
+          href="/apoyo/porque"
+          className="text-morado underline-offset-2 hover:underline"
+        >
+          ¿Por qué OncoTrack?
+        </Link>
       </p>
       <p className="text-xs leading-5 text-muted">
         Desarrollada por{" "}
