@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db, contarRegistroNuevo, type Marcador } from "@/lib/db";
+import { colapsarDuplicado } from "@/lib/texto";
 import {
   INPUT_CLS,
   BTN_PRIMARIO,
@@ -40,19 +41,29 @@ function comparacion(m: Marcador, todos: Marcador[]): string | null {
 
 export default function MarcadoresPage() {
   const formRef = useRef<HTMLFormElement>(null);
+  const [nombre, setNombre] = useState("");
   const marcadores = useLiveQuery(() =>
     db.marcadores.orderBy("fecha").reverse().toArray()
   );
 
   async function agregar(formData: FormData) {
+    // colapsarDuplicado: blindaje contra el bug de autocompletado móvil
+    // que concatenaba el nombre dos veces ("Cromogranina ACromogranina A").
     await db.marcadores.add({
-      nombre: String(formData.get("nombre") ?? "").trim(),
+      nombre: colapsarDuplicado(nombre),
       fecha: String(formData.get("fecha") ?? hoyISO()),
       valor: Number(formData.get("valor")),
       unidad: String(formData.get("unidad") ?? "").trim(),
     });
     await contarRegistroNuevo();
     formRef.current?.reset();
+    setNombre("");
+  }
+
+  async function borrar(m: Marcador) {
+    if (confirm(`¿Borrar ${m.nombre} (${m.valor} ${m.unidad})?`)) {
+      await db.marcadores.delete(m.id!);
+    }
   }
 
   return (
@@ -76,15 +87,30 @@ export default function MarcadoresPage() {
           <input
             name="nombre"
             required
-            list="marcadores-habituales"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
             placeholder="Ej.: Cromogranina A"
+            autoComplete="off"
             className={INPUT_CLS}
           />
-          <datalist id="marcadores-habituales">
+          {/* Chips en vez de datalist: en móvil el datalist podía concatenar
+              el valor dos veces al elegir la sugerencia (bug reportado) */}
+          <div className="mt-2 flex flex-wrap gap-1.5">
             {MARCADORES_HABITUALES.map((n) => (
-              <option key={n} value={n} />
+              <button
+                key={n}
+                type="button"
+                onClick={() => setNombre(n)}
+                className={`min-h-9 rounded-full border px-3 py-1.5 text-xs transition ${
+                  nombre === n
+                    ? "border-morado bg-morado/10 text-morado"
+                    : "border-line text-muted hover:border-morado/50 hover:text-fg"
+                }`}
+              >
+                {n}
+              </button>
             ))}
-          </datalist>
+          </div>
         </label>
         <div className="grid grid-cols-2 gap-3">
           <label className="block">
@@ -132,11 +158,20 @@ export default function MarcadoresPage() {
       {marcadores && marcadores.length > 0 && (
         <ul className="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface/40">
           {marcadores.map((m) => (
-            <li key={m.id} className="px-5 py-3">
-              <div className="flex items-baseline justify-between">
+            <li key={m.id} className="group px-5 py-3">
+              <div className="flex items-baseline justify-between gap-2">
                 <span className="text-sm text-fg">{m.nombre}</span>
-                <span className="tabular text-sm text-fg">
-                  {m.valor} <span className="text-muted">{m.unidad}</span>
+                <span className="flex items-baseline gap-2">
+                  <span className="tabular text-sm text-fg">
+                    {m.valor} <span className="text-muted">{m.unidad}</span>
+                  </span>
+                  <button
+                    onClick={() => borrar(m)}
+                    aria-label={`Borrar ${m.nombre} del ${fechaLegible(m.fecha)}`}
+                    className="min-h-9 min-w-9 rounded text-muted/60 transition hover:text-error"
+                  >
+                    ×
+                  </button>
                 </span>
               </div>
               <div className="mt-0.5 flex items-baseline justify-between">

@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db, contarRegistroNuevo } from "@/lib/db";
+import { colapsarDuplicado } from "@/lib/texto";
 import {
   INPUT_CLS,
   BTN_PRIMARIO,
@@ -22,6 +23,7 @@ const SINTOMAS_HABITUALES = [
 export default function SintomasPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [escala, setEscala] = useState(5);
+  const [tipo, setTipo] = useState("");
   const sintomas = useLiveQuery(() =>
     db.sintomas.orderBy("fecha").reverse().toArray()
   );
@@ -29,13 +31,14 @@ export default function SintomasPage() {
   async function agregar(formData: FormData) {
     await db.sintomas.add({
       fecha: String(formData.get("fecha") ?? hoyISO()),
-      tipo: String(formData.get("tipo") ?? "").trim(),
+      tipo: colapsarDuplicado(tipo),
       escala: Number(formData.get("escala")),
       nota: String(formData.get("nota") ?? "").trim() || undefined,
     });
     await contarRegistroNuevo();
     formRef.current?.reset();
     setEscala(5);
+    setTipo("");
   }
 
   return (
@@ -57,15 +60,29 @@ export default function SintomasPage() {
           <input
             name="tipo"
             required
-            list="sintomas-habituales"
+            value={tipo}
+            onChange={(e) => setTipo(e.target.value)}
             placeholder="Ej.: Fatiga"
+            autoComplete="off"
             className={INPUT_CLS}
           />
-          <datalist id="sintomas-habituales">
+          {/* Chips en vez de datalist (mismo bug móvil que en marcadores) */}
+          <div className="mt-2 flex flex-wrap gap-1.5">
             {SINTOMAS_HABITUALES.map((n) => (
-              <option key={n} value={n} />
+              <button
+                key={n}
+                type="button"
+                onClick={() => setTipo(n)}
+                className={`min-h-9 rounded-full border px-3 py-1.5 text-xs transition ${
+                  tipo === n
+                    ? "border-morado bg-morado/10 text-morado"
+                    : "border-line text-muted hover:border-morado/50 hover:text-fg"
+                }`}
+              >
+                {n}
+              </button>
             ))}
-          </datalist>
+          </div>
         </label>
         <label className="block">
           <span className="mb-1.5 flex items-baseline justify-between text-xs font-medium text-muted">
